@@ -12,28 +12,41 @@ const EmailVerifiedPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Supabase handles the session automatically when returning from the email link.
-    // We just wait a moment to ensure the session is processed.
-    const checkSession = async () => {
+    const checkStatus = async () => {
+      // 1. Check for error parameters in the URL hash (Supabase sends errors here)
+      const hash = window.location.hash;
+      if (hash && hash.includes('error=')) {
+        const params = new URLSearchParams(hash.substring(1)); // remove the #
+        const errorCode = params.get('error_code');
+        const errorDesc = params.get('error_description');
+
+        if (errorCode === 'otp_expired') {
+          setError('This confirmation link has expired or has already been used. Please try logging in or request a new link.');
+        } else {
+          setError(errorDesc || 'An error occurred during verification.');
+        }
+        setVerifying(false);
+        return;
+      }
+
+      // 2. Check if we have a session (successful verification)
       const { data: { session } } = await supabase.auth.getSession();
       
       if (session) {
         setVerifying(false);
       } else {
-        // If no session, it might still be processing or the link was invalid/expired
-        // We'll wait a bit longer or show a generic success message since 
-        // usually the redirect happens AFTER the verification is successful on Supabase side.
+        // Fallback: if no session and no error, wait a bit
         setTimeout(() => {
           setVerifying(false);
-        }, 2000);
+        }, 1500);
       }
     };
 
-    checkSession();
+    checkStatus();
   }, []);
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-100 via-emerald-50 to-white flex items-center justify-center p-6">
+    <div className={`min-h-screen flex items-center justify-center p-6 ${error ? 'bg-red-50' : 'bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-100 via-emerald-50 to-white'}`}>
       <div className="w-full max-w-md">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -46,6 +59,25 @@ const EmailVerifiedPage: React.FC = () => {
                 <Loader2 className="w-16 h-16 text-emerald-600 animate-spin mx-auto mb-6" />
                 <h2 className="text-2xl font-bold text-slate-800">Verifying your email...</h2>
               </div>
+            ) : error ? (
+              <>
+                <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center text-red-600 mx-auto mb-6 shadow-lg shadow-red-100">
+                  <div className="text-3xl font-bold">!</div>
+                </div>
+                
+                <h2 className="text-3xl font-bold text-slate-800 mb-4">Verification Issue</h2>
+                <p className="text-slate-600 mb-8 leading-relaxed">
+                  {error}
+                </p>
+
+                <Link 
+                  to="/" 
+                  className="w-full py-4 rounded-xl font-bold text-white bg-slate-800 shadow-lg transition-all flex items-center justify-center gap-2"
+                >
+                  <ArrowRight size={18} className="rotate-180" />
+                  Back to Login
+                </Link>
+              </>
             ) : (
               <>
                 <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 mx-auto mb-6 shadow-lg shadow-emerald-100">
