@@ -52,10 +52,19 @@ const PROGRESS_DATA = [
 ];
 
 const StudentDashboard: React.FC = () => {
-  const { user, signOut } = useAuth();
+  const { profile, signOut, loading } = useAuth();
   const [activeTab, setActiveTab] = useState<'overview' | 'games' | 'exams'>('overview');
 
-  if (!user) return null;
+  if (loading || !profile) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+          <p className="text-slate-500 font-medium">Loading your dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   const IconMap: Record<string, any> = {
     Tags, Mountain, Search, Network, Info, Building2, Indent
@@ -123,7 +132,7 @@ const StudentDashboard: React.FC = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
           >
-            <h1 className="text-3xl font-bold text-slate-800 tracking-tight">Hello, {user.name.split(' ')[0]}! 👋</h1>
+            <h1 className="text-3xl font-bold text-slate-800 tracking-tight">Hello, {profile.name.split(' ')[0]}! 👋</h1>
             <p className="text-slate-500">Ready to master the board exams today?</p>
           </motion.div>
           
@@ -131,16 +140,16 @@ const StudentDashboard: React.FC = () => {
             <GlassCard className="px-4 py-2 flex items-center space-x-3 !rounded-full border-white/60">
                <div className="flex items-center text-orange-500 font-bold gap-2">
                  <Flame size={18} />
-                 <span>{user.streak} Days</span>
+                 <span>{profile.streak} Days</span>
                </div>
                <div className="h-6 w-px bg-slate-200"></div>
                <div className="flex items-center text-blue-600 font-bold gap-2">
                  <Star size={18} />
-                 <span>LVL {user.level}</span>
+                 <span>LVL {profile.level}</span>
                </div>
             </GlassCard>
             <div className="w-12 h-12 bg-indigo-100 rounded-2xl flex items-center justify-center text-indigo-600 font-bold border-2 border-white shadow-sm">
-                {user.name.charAt(0)}
+                {profile.name.charAt(0)}
             </div>
           </div>
         </header>

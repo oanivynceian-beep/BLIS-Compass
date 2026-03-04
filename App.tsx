@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import IndexEntry from './pages/indexEntry';
+import IndexEntry from './pages/IndexEntry';
 import StudentDashboard from './pages/StudentDashboard';
 import StaffDashboard from './pages/StaffDashboard';
 import RegisterPage from './pages/RegisterPage';
@@ -12,7 +13,7 @@ const ProtectedRoute: React.FC<{
   children: React.ReactNode; 
   allowedRoles?: UserRole[];
 }> = ({ children, allowedRoles }) => {
-  const { user, loading } = useAuth();
+  const { session, profile, loading } = useAuth();
 
   if (loading) {
     return (
@@ -22,17 +23,17 @@ const ProtectedRoute: React.FC<{
     );
   }
 
-  if (!user) {
+  if (!session) {
     return <Navigate to="/" replace />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
-    // If role is unknown or not allowed, redirect to error page
-    if (!Object.values(UserRole).includes(user.role)) {
-      return <Navigate to="/error" replace />;
-    }
+  if (!profile) {
+    return <Navigate to="/error" replace />;
+  }
+
+  if (allowedRoles && !allowedRoles.includes(profile.role)) {
     // Otherwise redirect to their appropriate dashboard
-    const target = user.role === UserRole.STUDENT ? '/student' : '/staff';
+    const target = profile.role === UserRole.STUDENT ? '/student' : '/staff';
     return <Navigate to={target} replace />;
   }
 
@@ -40,7 +41,7 @@ const ProtectedRoute: React.FC<{
 };
 
 const AppRoutes: React.FC = () => {
-  const { user, loading } = useAuth();
+  const { session, profile, loading } = useAuth();
 
   if (loading) {
     return (

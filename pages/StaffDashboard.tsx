@@ -5,6 +5,7 @@ import StaffHeader from '../components/StaffHeader';
 import { motion } from 'motion/react';
 import { Users, BookOpen, GraduationCap, TrendingUp } from 'lucide-react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Overview: React.FC = () => {
   const stats = [
@@ -96,6 +97,19 @@ const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => (
 );
 
 const StaffDashboard: React.FC = () => {
+  const { profile, loading } = useAuth();
+
+  if (loading || !profile) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+          <p className="text-slate-500 font-medium">Loading staff dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-screen bg-slate-50">
       <StaffSidebar />

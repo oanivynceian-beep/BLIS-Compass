@@ -15,4 +15,17 @@ if (!import.meta.env.VITE_SUPABASE_ANON_KEY) {
   console.warn('Supabase Anon Key missing. Using fallback key.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Create client with custom auth config to prevent Navigator Lock timeouts in iframes
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: true,
+    storageKey: 'lis-compass-auth-token',
+    // Provide a custom no-op lock to bypass the Navigator LockManager entirely
+    // The signature for LockFunc is (name, acquireTimeout, acquire)
+    lock: async (_name: string, _acquireTimeout: number, acquire: () => Promise<any>) => {
+      return await acquire();
+    },
+  }
+});

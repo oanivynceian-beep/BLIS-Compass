@@ -2,14 +2,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import GlassCard from '../components/GlassCard';
-import { UserRole } from '../types';
-import { supabase } from '../src/lib/supabase';
+import { useAuth } from '../context/AuthContext';
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { signUpStudent } = useAuth();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,42 +17,9 @@ const RegisterPage: React.FC = () => {
     setError(null);
 
     try {
-      // 1. Sign up with Supabase Auth
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-        options: {
-          data: {
-            full_name: formData.name,
-          }
-        }
-      });
-
-      if (authError) throw authError;
-
-      if (authData.user) {
-        // 2. Create profile in 'profiles' table
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert([
-            {
-              id: authData.user.id,
-              full_name: formData.name,
-              role: UserRole.STUDENT,
-              level: 1,
-              exp: 0,
-              streak: 0
-            }
-          ]);
-
-        if (profileError) {
-          // If profile creation fails, we should delete the auth user or at least inform the user
-          // For now, let's just throw the error so the user sees it
-          throw new Error(`Account created but profile setup failed: ${profileError.message}`);
-        }
-
-        navigate('/dashboard');
-      }
+      await signUpStudent(formData.email, formData.password, formData.name);
+      // Redirect to confirmation page instead of dashboard
+      navigate('/confirm-email', { state: { email: formData.email } });
     } catch (err: any) {
       setError(err.message || 'Failed to create account');
     } finally {
@@ -131,7 +98,7 @@ const RegisterPage: React.FC = () => {
 
           <div className="mt-8 text-center">
             <p className="text-slate-500">Already have an account?</p>
-            <Link to="/login/student" className="text-blue-600 font-semibold hover:underline">Log in here</Link>
+            <Link to="/" className="text-blue-600 font-semibold hover:underline">Log in here</Link>
           </div>
         </GlassCard>
       </div>
