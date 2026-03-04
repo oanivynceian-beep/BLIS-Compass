@@ -13,6 +13,7 @@ import {
   BarChart3, 
   Settings, 
   LogOut, 
+  Loader2,
   Flame, 
   Star, 
   Compass,
@@ -48,7 +49,7 @@ const PROGRESS_DATA = [
 ];
 
 const StudentDashboard: React.FC = () => {
-  const { profile, signOut, loading } = useAuth();
+  const { profile, signOut, loading, signingOut } = useAuth();
   const [activeTab, setActiveTab] = useState<'overview' | 'games' | 'exams'>('overview');
 
   if (loading || !profile) {
@@ -113,10 +114,11 @@ const StudentDashboard: React.FC = () => {
 
         <button 
           onClick={signOut}
-          className="mt-auto flex items-center space-x-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 transition-all font-medium"
+          disabled={signingOut}
+          className="mt-auto flex items-center space-x-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 transition-all font-medium disabled:opacity-50"
         >
-          <LogOut size={20} />
-          <span>Log Out</span>
+          {signingOut ? <Loader2 size={20} className="animate-spin" /> : <LogOut size={20} />}
+          <span>{signingOut ? 'Logging out...' : 'Log Out'}</span>
         </button>
       </aside>
 

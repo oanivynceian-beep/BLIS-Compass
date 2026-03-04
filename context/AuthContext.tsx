@@ -10,6 +10,7 @@ interface AuthContextType {
   user: AuthUser | null;
   profile: User | null;
   loading: boolean;
+  signingOut: boolean;
   signOut: () => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
   signUpStudent: (email: string, password: string, fullName: string) => Promise<void>;
@@ -24,6 +25,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [profile, setProfile] = useState<User | null>(null);
   const profileRef = React.useRef<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [signingOut, setSigningOut] = useState(false);
 
   // Keep ref in sync with state
   useEffect(() => {
@@ -170,10 +172,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         const { data: { session: initialSession }, error: sessionError } = await supabase.auth.getSession();
         
         if (sessionError) {
-          // Handle specific refresh token error by clearing everything
-          if (sessionError.message.includes('Refresh Token Not Found')) {
-            console.warn('Stale session detected, clearing auth data...');
-            await supabase.auth.signOut();
+          // Handle specific refresh token or network errors by clearing everything
+          if (
+            sessionError.message.includes('Refresh Token Not Found') || 
+            sessionError.message.includes('Failed to fetch') ||
+            sessionError.message.includes('invalid_grant')
+          ) {
+            console.warn('Stale or unreachable session detected, clearing auth data:', sessionError.message);
+            
+            // Attempt to sign out to clear local storage, but catch errors if network is down
+            try {
+              await supabase.auth.signOut();
+            } catch (e) {
+              // If signOut fails (e.g. network down), manually clear local storage as a fallback
+              localStorage.removeItem('lis-compass-auth-token');
+            }
+
             if (mounted) {
               setSession(null);
               setAuthUser(null);
@@ -240,13 +254,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const signOut = async () => {
     try {
+      setSigningOut(true);
+      // Attempt to sign out from Supabase (network call)
       await supabase.auth.signOut();
     } catch (err) {
       console.error('Error during sign out:', err);
+      // Even if network fails, we want to clear local storage as a fallback
+      localStorage.removeItem('lis-compass-auth-token');
     } finally {
       setSession(null);
       setAuthUser(null);
       setProfile(null);
+      setSigningOut(false);
     }
   };
 
@@ -256,6 +275,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       user: authUser, 
       profile, 
       loading, 
+      signingOut,
       signOut, 
       signIn, 
       signUpStudent, 
