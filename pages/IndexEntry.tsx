@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { GraduationCap, ShieldCheck, ArrowRight, Loader2, Compass } from 'lucide-react';
+import { GraduationCap, ShieldCheck, ArrowRight, Loader2, Compass, Send } from 'lucide-react';
 import { supabase } from '../src/lib/supabase';
 import GlassCard from '../components/GlassCard';
 import { Link, useNavigate } from 'react-router-dom';
@@ -23,7 +23,7 @@ const IndexEntry: React.FC = () => {
       const params = new URLSearchParams(hash.substring(1));
       const errorCode = params.get('error_code');
       if (errorCode === 'otp_expired') {
-        setError('Your email confirmation link has expired or has already been used. Please log in if you have already verified, or request a new link.');
+        setError('Your email confirmation link has expired or has already been used. Please log in if you have already verified, or request a new link below.');
       } else {
         setError(params.get('error_description') || 'An error occurred during verification.');
       }
@@ -87,9 +87,20 @@ const IndexEntry: React.FC = () => {
             </p>
 
             {error && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-100 text-red-600 rounded-xl text-sm flex items-start gap-3">
-                <div className="mt-0.5">⚠️</div>
-                <p>{error}</p>
+              <div className="mb-6 p-4 bg-red-50 border border-red-100 text-red-600 rounded-xl text-sm flex flex-col gap-3">
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5">⚠️</div>
+                  <p>{error}</p>
+                </div>
+                {error.includes('expired') && (
+                  <Link 
+                    to="/resend-verification" 
+                    className="text-blue-600 font-bold hover:underline flex items-center gap-1 mt-1"
+                  >
+                    <Send size={14} />
+                    Resend Verification Link
+                  </Link>
+                )}
               </div>
             )}
 

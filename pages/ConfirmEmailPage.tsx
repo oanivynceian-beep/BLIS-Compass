@@ -46,7 +46,7 @@ const ConfirmEmailPage: React.FC = () => {
         </motion.div>
         
         <p className="text-center mt-8 text-slate-400 text-sm">
-          Didn't receive the email? <button className="text-blue-600 font-semibold hover:underline">Resend link</button>
+          Didn't receive the email? <Link to="/resend-verification" className="text-blue-600 font-semibold hover:underline">Resend link</Link>
         </p>
       </div>
     </div>
