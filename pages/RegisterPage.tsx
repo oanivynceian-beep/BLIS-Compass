@@ -1,18 +1,26 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ArrowLeft, AlertCircle, Loader2 } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import { useAuth } from '../context/AuthContext';
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { signUpStudent } = useAuth();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Password confirmation check
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
@@ -30,8 +38,8 @@ const RegisterPage: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
       <div className="w-full max-w-md">
-        <Link to="/" className="inline-flex items-center text-slate-500 hover:text-blue-600 mb-8 transition-colors">
-          <i className="fas fa-arrow-left mr-2"></i> Back to Home
+        <Link to="/" className="inline-flex items-center text-slate-500 hover:text-blue-600 mb-8 transition-colors gap-2 font-medium">
+          <ArrowLeft size={18} /> Back to Home
         </Link>
         
         <GlassCard className="p-8">
@@ -41,8 +49,8 @@ const RegisterPage: React.FC = () => {
           </div>
 
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-100 text-red-600 rounded-xl text-sm">
-              <i className="fas fa-exclamation-circle mr-2"></i> {error}
+            <div className="mb-6 p-4 bg-red-50 border border-red-100 text-red-600 rounded-xl text-sm flex items-center gap-2">
+              <AlertCircle size={18} /> {error}
             </div>
           )}
 
@@ -83,13 +91,25 @@ const RegisterPage: React.FC = () => {
                 disabled={loading}
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Confirm Password</label>
+              <input 
+                type="password" 
+                required
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                placeholder="••••••••"
+                value={formData.confirmPassword}
+                onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                disabled={loading}
+              />
+            </div>
             <button 
               type="submit"
               disabled={loading}
               className={`w-full py-4 rounded-xl font-bold text-white bg-blue-600 shadow-lg shadow-blue-200 transition-transform active:scale-95 flex items-center justify-center ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
               {loading ? (
-                <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <Loader2 className="animate-spin" size={20} />
               ) : (
                 'Create Account'
               )}
