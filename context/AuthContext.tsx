@@ -223,27 +223,39 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
       if (!mounted) return;
       
-      // Only show full-page loading if we don't have a profile yet
-      // and we are actually signing in. This prevents the Alt-Tab flicker.
-      if (currentSession && event === 'SIGNED_IN' && !profileRef.current) {
-        setLoading(true);
-      }
+      try {
+        // Only show full-page loading if we don't have a profile yet
+        // and we are actually signing in. This prevents the Alt-Tab flicker.
+        if (currentSession && (event === 'SIGNED_IN' || event === 'USER_UPDATED') && !profileRef.current) {
+          setLoading(true);
+        }
 
-      setSession(currentSession);
-      setAuthUser(currentSession?.user ?? null);
-      
-      if (currentSession) {
-        const p = await fetchProfile(
-          currentSession.user.id, 
-          currentSession.user.email || '',
-          currentSession.user.user_metadata
-        );
-        if (mounted) setProfile(p);
-      } else {
-        if (mounted) setProfile(null);
+        setSession(currentSession);
+        setAuthUser(currentSession?.user ?? null);
+        
+        if (currentSession) {
+          // Add a safety timeout to profile fetching to prevent hanging the UI
+          const p = await Promise.race([
+            fetchProfile(
+              currentSession.user.id, 
+              currentSession.user.email || '',
+              currentSession.user.user_metadata
+            ),
+            new Promise<null>((resolve) => setTimeout(() => {
+              console.warn('Profile fetch timed out in onAuthStateChange');
+              resolve(null);
+            }, 5000))
+          ]);
+          
+          if (mounted) setProfile(p);
+        } else {
+          if (mounted) setProfile(null);
+        }
+      } catch (err) {
+        console.error('Error in onAuthStateChange:', err);
+      } finally {
+        if (mounted) setLoading(false);
       }
-      
-      if (mounted) setLoading(false);
     });
 
     return () => {
@@ -255,17 +267,27 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const signOut = async () => {
     try {
       setSigningOut(true);
-      // Attempt to sign out from Supabase (network call)
-      await supabase.auth.signOut();
+      
+      // We use a timeout because sometimes signOut can hang if the network is unstable 
+      // or the session is in a weird state after tab switching/inactivity.
+      // We race the Supabase signOut against a 3-second timeout.
+      await Promise.race([
+        supabase.auth.signOut(),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Sign out timeout')), 3000))
+      ]);
     } catch (err) {
-      console.error('Error during sign out:', err);
-      // Even if network fails, we want to clear local storage as a fallback
+      console.error('Error or timeout during sign out:', err);
+      // Manually clear local storage as a fallback if the Supabase call fails or times out
       localStorage.removeItem('lis-compass-auth-token');
     } finally {
+      // Force clear local state regardless of whether the server call succeeded
       setSession(null);
       setAuthUser(null);
       setProfile(null);
       setSigningOut(false);
+      
+      // Optional: Redirect to home or reload to ensure a clean state
+      // window.location.href = '/'; 
     }
   };
 
