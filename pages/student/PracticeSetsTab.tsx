@@ -65,7 +65,7 @@ const PracticeSetsTab: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="sticky top-0 z-50 bg-slate-50/95 backdrop-blur-md py-6 -mx-4 px-4 border-b border-slate-200/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-3xl font-bold text-slate-800">Practice Sets</h2>
           <p className="text-slate-500">Master each subject part by part. Score 80% to unlock the next level.</p>

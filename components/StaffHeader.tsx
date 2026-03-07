@@ -7,7 +7,7 @@ const StaffHeader: React.FC = () => {
   const { profile } = useAuth();
 
   return (
-    <header className="h-20 bg-white border-b border-slate-200 px-8 flex items-center justify-between sticky top-0 z-10">
+    <header className="h-20 bg-white border-b border-slate-200 px-8 flex items-center justify-between sticky top-0 z-50">
       <div className="flex items-center gap-4 bg-slate-50 px-4 py-2 rounded-xl border border-slate-100 w-96">
         <Search size={18} className="text-slate-400" />
         <input 

@@ -89,8 +89,8 @@ const MockExamsPage: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      {/* Header Section - Sticky */}
+      <div className="sticky top-0 z-50 bg-slate-50/95 backdrop-blur-md py-6 -mx-4 px-4 border-b border-slate-200/50 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h1 className="text-3xl font-bold text-slate-800 mb-2">Mockboard Simulations</h1>
           <p className="text-slate-500">Practice with real-time updated exam simulations created by your instructors.</p>
@@ -143,6 +143,7 @@ const MockExamsPage: React.FC = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
+                className="h-full"
               >
                 <GlassCard hoverEffect className="p-8 border-white/60 flex flex-col h-full">
                   <div className="flex justify-between items-start mb-6">

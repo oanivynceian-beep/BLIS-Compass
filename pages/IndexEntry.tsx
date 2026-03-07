@@ -49,7 +49,11 @@ const IndexEntry: React.FC = () => {
       await signIn(email, password);
       // Auth change listener in AuthContext will handle redirection
     } catch (err: any) {
-      setError(err.message || 'Failed to sign in');
+      let msg = err.message || 'Failed to sign in';
+      if (msg.includes('Failed to fetch')) {
+        msg = 'Connection error: Unable to reach the server. Please check your internet or ensure the Supabase project is active.';
+      }
+      setError(msg);
       setLoading(false);
     }
   };

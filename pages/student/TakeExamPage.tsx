@@ -201,7 +201,7 @@ const TakeExamPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-20">
       {/* Header */}
-      <div className="flex justify-between items-center sticky top-0 bg-slate-50/80 backdrop-blur-md z-10 py-4 -mx-4 px-4">
+      <div className="flex justify-between items-center sticky top-0 bg-slate-50/90 backdrop-blur-md z-50 py-4 -mx-4 px-4 border-b border-slate-200/50">
         <div className="flex items-center gap-4">
           <button 
             onClick={() => window.confirm('Exit exam? Your progress will not be saved.') && navigate('/student/mock-exams')}

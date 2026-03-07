@@ -146,8 +146,9 @@ const MockExamsPage: React.FC = () => {
               key={exam.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              className="h-full"
             >
-              <GlassCard className="p-6 border-slate-200">
+              <GlassCard className="p-6 border-slate-200 h-full flex flex-col">
                 <div className="flex justify-between items-start mb-4">
                   <div className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${exam.is_published ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-100 text-slate-500'}`}>
                     {exam.is_published ? 'Published' : 'Draft'}
@@ -170,7 +171,7 @@ const MockExamsPage: React.FC = () => {
                   </div>
                 </div>
 
-                <h3 className="text-xl font-bold text-slate-800 mb-4">{exam.title}</h3>
+                <h3 className="text-xl font-bold text-slate-800 mb-4 line-clamp-2 flex-grow">{exam.title}</h3>
                 
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center gap-3 text-sm text-slate-500">
@@ -183,7 +184,7 @@ const MockExamsPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex gap-3 mt-auto">
                   <button 
                     onClick={() => togglePublish(exam)}
                     className={`flex-1 py-2.5 rounded-xl font-bold text-sm transition-all ${exam.is_published ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-lg shadow-emerald-100'}`}

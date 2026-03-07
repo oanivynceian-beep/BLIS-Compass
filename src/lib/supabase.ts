@@ -1,14 +1,24 @@
 import { createClient } from '@supabase/supabase-js';
 
 const rawUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseUrl = (rawUrl && rawUrl.startsWith('http')) 
-  ? rawUrl 
-  : 'https://ngkpxpjjcjinltyxeomg.supabase.co';
+let supabaseUrl = 'https://ngkpxpjjcjinltyxeomg.supabase.co';
+
+if (rawUrl && rawUrl !== 'undefined' && rawUrl !== 'null') {
+  if (rawUrl.startsWith('http')) {
+    supabaseUrl = rawUrl;
+  } else if (rawUrl.includes('.supabase.co')) {
+    // If it's just the domain, prepend https://
+    supabaseUrl = `https://${rawUrl}`;
+    console.warn('Supabase URL missing protocol. Prepending https://');
+  } else {
+    console.warn('Invalid Supabase URL provided in environment variables. Using fallback.');
+  }
+}
 
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_fpbr8oyt2xAQy_3n0vx3eA_Mh7au0UX';
 
-if (!rawUrl || !rawUrl.startsWith('http')) {
-  console.warn('Supabase URL missing or invalid. Using fallback URL.');
+if (!rawUrl) {
+  console.warn('Supabase URL missing from environment variables. Using fallback project.');
 }
 
 if (!import.meta.env.VITE_SUPABASE_ANON_KEY) {
