@@ -14,6 +14,9 @@ import PracticePlayer from './pages/student/PracticePlayer';
 import ErrorPage from './pages/ErrorPage';
 import Game1 from './pages/student/Game1';
 import Game2 from './pages/student/Game2';
+import Game3 from './pages/student/Game3';
+import Game4 from './pages/student/Game4';
+import Game5 from './pages/student/Game5';
 import { UserRole } from './types';
 
 const ProtectedRoute: React.FC<{ 
@@ -68,6 +71,9 @@ const AppRoutes: React.FC = () => {
       <Route path="/error" element={<ErrorPage />} />
       <Route path="/game1" element={<Game1 />} />
       <Route path="/game2" element={<Game2 />} />
+      <Route path="/game3" element={<Game3 />} />
+      <Route path="/game4" element={<Game4 />} />
+      <Route path="/game5" element={<Game5 />} />
       
       <Route 
         path="/student/*" 

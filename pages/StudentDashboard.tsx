@@ -35,12 +35,12 @@ import {
 import { AreaChart, Area, XAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const GAMES: GameCard[] = [
-  { id: '1', title: 'Cataloging Blitz', description: 'Correctly assign MARC tags in this fast-paced challenge.', category: 'Cataloging', icon: 'Tags', difficulty: 'Intermediate' },
-  { id: '2', title: 'DDC Climber', description: 'Scale the mountain by correctly identifying class numbers.', category: 'Classification', icon: 'Mountain', difficulty: 'Beginner' },
-  { id: '3', title: 'Reference Quest', description: 'Find the right sources for complex user inquiries.', category: 'Reference Services', icon: 'Search', difficulty: 'Advanced' },
-  { id: '4', title: 'Indexing Maze', description: 'Connect related terms using controlled vocabulary.', category: 'Indexing', icon: 'Network', difficulty: 'Intermediate' },
+  // Removed Cataloging Blitz, DDC Climber, Reference Quest, Indexing Maze
   { id: '5', title: 'Reference Crush Pro', description: 'Test your reference skills in a fast-paced matching game.', category: 'Reference Services', icon: 'Search', difficulty: 'Advanced' },
   { id: '6', title: 'Source Detectives', description: 'Investigate and identify the correct sources in challenging scenarios.', category: 'Reference Services', icon: 'Search', difficulty: 'Intermediate' },
+  { id: '7', title: 'Classify', description: 'Classify items correctly in this new challenge.', category: 'Classification', icon: 'Mountain', difficulty: 'Beginner' },
+  { id: '8', title: 'Shelf Shuffle', description: 'Arrange books in the correct order on the shelf.', category: 'Cataloging', icon: 'Tags', difficulty: 'Intermediate' },
+  { id: '9', title: 'Marc Match', description: 'Match MARC fields to their correct uses.', category: 'Cataloging', icon: 'Tags', difficulty: 'Intermediate' },
 ];
 
 const PROGRESS_DATA = [
@@ -312,6 +312,12 @@ const StudentDashboard: React.FC = () => {
                          navigate('/game1');
                        } else if (game.title === 'Source Detectives') {
                          navigate('/game2');
+                       } else if (game.title === 'Classify') {
+                         navigate('/game3');
+                       } else if (game.title === 'Shelf Shuffle') {
+                         navigate('/game4');
+                       } else if (game.title === 'Marc Match') {
+                         navigate('/game5');
                        }
                      }}
                    >
