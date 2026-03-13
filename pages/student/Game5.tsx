@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft, Heart, Info, Play, RefreshCw, Trophy } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -28,6 +29,7 @@ const DIFFICULTY_CONFIG = {
 };
 
 export default function MARCMatch() {
+  const navigate = useNavigate();
   const [gameState, setGameState] = useState<GameState>({
     status: 'start',
     difficulty: 'Easy',
@@ -58,46 +60,22 @@ export default function MARCMatch() {
   const startNewRound = useCallback((difficulty: Difficulty) => {
     const question = getRandomQuestion();
     const options = getRandomOptions(question.correctTag, DIFFICULTY_CONFIG[difficulty].optionsCount);
-    
     setGameState(prev => ({
       ...prev,
+      status: 'playing',
+      difficulty,
+      score: 0,
+      lives: 3,
+      timeLeft: DIFFICULTY_CONFIG[difficulty].time,
       currentQuestion: question,
       options,
     }));
   }, [getRandomQuestion, getRandomOptions]);
 
+  // Add missing startGame function
   const startGame = (difficulty: Difficulty) => {
-    const config = DIFFICULTY_CONFIG[difficulty];
-    setGameState({
-      status: 'playing',
-      difficulty,
-      score: 0,
-      lives: 3,
-      timeLeft: config.time,
-      currentQuestion: null,
-      options: [],
-    });
     startNewRound(difficulty);
   };
-
-  useEffect(() => {
-    if (gameState.status === 'playing') {
-      timerRef.current = setInterval(() => {
-        setGameState(prev => {
-          if (prev.timeLeft <= 0) {
-            clearInterval(timerRef.current!);
-            return { ...prev, status: 'gameover' };
-          }
-          return { ...prev, timeLeft: Math.max(0, prev.timeLeft - 0.1) };
-        });
-      }, 100);
-    } else {
-      if (timerRef.current) clearInterval(timerRef.current);
-    }
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [gameState.status]);
 
   const handleMatch = (tag: string) => {
     if (!gameState.currentQuestion) return;

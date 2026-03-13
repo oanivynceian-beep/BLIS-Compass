@@ -11,154 +11,196 @@ export interface Question {
   explanation: string;
 }
 
+const createOptions = (labels: string[]) => labels.map((label, index) => ({
+  id: String.fromCharCode(65 + index),
+  label
+}));
+
 export const QUESTIONS: Record<string, Question[]> = {
   easy: [
-    {
-      id: 1,
-      scenario: "Identify a PRIMARY source by selecting which material was created by someone who directly experienced an event.",
-      options: [
-        { id: '1', label: 'Encyclopedia article' },
-        { id: '2', label: 'History textbook' },
-        { id: '3', label: 'Personal diary' },
-        { id: '4', label: 'Research summary' }
-      ],
-      correctId: '3',
-      explanation: "A personal diary is a primary source because it is a first-hand account written by someone who directly experienced the events."
-    },
-    {
-      id: 2,
-      scenario: "Which of these is a SECONDARY source that interprets or analyzes primary data?",
-      options: [
-        { id: '1', label: 'Original photograph' },
-        { id: '2', label: 'Biography' },
-        { id: '3', label: 'Birth certificate' },
-        { id: '4', label: 'Video footage' }
-      ],
-      correctId: '2',
-      explanation: "A biography is a secondary source because it is written by someone who did not personally experience the subject's life but researched and interpreted it."
-    },
-    {
-      id: 3,
-      scenario: "A student finds an old letter from a soldier during the Civil War. What type of source is this?",
-      options: [
-        { id: '1', label: 'Primary Source' },
-        { id: '2', label: 'Secondary Source' },
-        { id: '3', label: 'Tertiary Source' },
-        { id: '4', label: 'None of the above' }
-      ],
-      correctId: '1',
-      explanation: "Letters are primary sources as they provide direct, first-hand evidence from the time period being studied."
-    },
-    {
-      id: 4,
-      scenario: "You are reading a newspaper article written today about an event that happened 50 years ago. This is a:",
-      options: [
-        { id: '1', label: 'Primary Source' },
-        { id: '2', label: 'Secondary Source' },
-        { id: '3', label: 'Original Source' },
-        { id: '4', label: 'Direct Source' }
-      ],
-      correctId: '2',
-      explanation: "Since the article was written long after the event by someone who likely didn't witness it, it is a secondary source."
-    },
-    {
-      id: 5,
-      scenario: "Which material is a PRIMARY source for a scientist's new discovery?",
-      options: [
-        { id: '1', label: 'Science magazine summary' },
-        { id: '2', label: 'Textbook chapter' },
-        { id: '3', label: 'Lab notes and raw data' },
-        { id: '4', label: 'Newspaper report' }
-      ],
-      correctId: '3',
-      explanation: "Lab notes and raw data are primary sources because they are the original records created during the actual experiment."
-    }
+    // Set 1
+    { id: 1, scenario: "Which is a primary source?", options: createOptions(['Encyclopedia entry', 'Personal diary', 'Textbook chapter', 'Study guide']), correctId: 'B', explanation: "A personal diary is a firsthand account created at the time of an event." },
+    { id: 2, scenario: "Primary sources provide:", options: createOptions(['Summarized information', 'Interpreted information', 'Firsthand information', 'Compiled information']), correctId: 'C', explanation: "Primary sources offer direct evidence or firsthand testimony about a topic." },
+    { id: 3, scenario: "Which is a secondary source?", options: createOptions(['Interview transcript', 'Scholarly analysis article', 'Personal letter', 'Field notebook']), correctId: 'B', explanation: "Secondary sources analyze, interpret, or summarize primary sources." },
+    { id: 4, scenario: "Which is a tertiary source?", options: createOptions(['Diary', 'Encyclopedia', 'Interview transcript', 'Photograph']), correctId: 'B', explanation: "Tertiary sources index, abstract, or compile other sources." },
+    { id: 5, scenario: "Which tool gives definitions of words?", options: createOptions(['Dictionary', 'Biography', 'Journal article', 'Research report']), correctId: 'A', explanation: "A dictionary is a reference tool specifically for word definitions." },
+    // Set 2
+    { id: 6, scenario: "Which is a primary source?", options: createOptions(['Biography', 'Personal letter', 'Textbook', 'Research summary']), correctId: 'B', explanation: "A personal letter is an original document from a person involved in events." },
+    { id: 7, scenario: "Primary sources contain:", options: createOptions(['Firsthand information', 'Compiled information', 'Summarized interpretations', 'Secondary analysis']), correctId: 'A', explanation: "Primary sources are original materials that have not been filtered through interpretation." },
+    { id: 8, scenario: "Which is a secondary source?", options: createOptions(['Diary', 'Review journal article', 'Field notes', 'Raw data']), correctId: 'B', explanation: "Review articles summarize and evaluate existing research." },
+    { id: 9, scenario: "Which is a tertiary source?", options: createOptions(['Encyclopedia', 'Diary', 'Interview transcript', 'Photograph']), correctId: 'A', explanation: "Encyclopedias provide broad overviews by compiling multiple sources." },
+    { id: 10, scenario: "Tool used for brief definitions:", options: createOptions(['Dictionary', 'Research article', 'Personal narrative', 'Study guide']), correctId: 'A', explanation: "Dictionaries provide concise definitions of terms." },
+    // Set 3
+    { id: 11, scenario: "Example of a primary source:", options: createOptions(['Court testimony', 'Textbook summary', 'Encyclopedia entry', 'Research review']), correctId: 'A', explanation: "Court testimony is a direct account given by a witness." },
+    { id: 12, scenario: "Primary sources are characterized by:", options: createOptions(['Analyzing data', 'Firsthand experience', 'Summarizing studies', 'Compiling multiple sources']), correctId: 'B', explanation: "The hallmark of a primary source is its direct connection to an event or experience." },
+    { id: 13, scenario: "Identify a secondary source:", options: createOptions(['Research article analyzing experiments', 'Diary of a participant', 'Audio recording of event', 'Raw survey data']), correctId: 'A', explanation: "An article that analyzes experiments is interpreting primary data." },
+    { id: 14, scenario: "Tertiary source for quick reference:", options: createOptions(['Index', 'Interview transcript', 'Field notes', 'Laboratory log']), correctId: 'A', explanation: "An index helps locate information across various sources." },
+    { id: 15, scenario: "Example of a tertiary reference tool:", options: createOptions(['Dictionary', 'Personal narrative', 'Experimental log', 'Interview transcript']), correctId: 'A', explanation: "Dictionaries are standard tertiary reference works." },
+    // Set 4
+    { id: 16, scenario: "Which is a primary source?", options: createOptions(['Original photograph', 'Textbook', 'Encyclopedia', 'Review article']), correctId: 'A', explanation: "An original photograph captures a moment directly." },
+    { id: 17, scenario: "Primary sources provide:", options: createOptions(['Analysis of events', 'Firsthand evidence', 'Summarized reports', 'Reference compilation']), correctId: 'B', explanation: "Primary sources serve as direct evidence of the past or a phenomenon." },
+    { id: 18, scenario: "Secondary source example:", options: createOptions(['Personal diary', 'Analytical journal article', 'Autobiography', 'Field notes']), correctId: 'B', explanation: "Analytical articles provide interpretation of primary evidence." },
+    { id: 19, scenario: "Tertiary source example:", options: createOptions(['Almanac', 'Diary', 'Manuscript', 'Raw dataset']), correctId: 'A', explanation: "Almanacs compile facts and statistics from many sources." },
+    { id: 20, scenario: "Tool for definitions:", options: createOptions(['Dictionary', 'Research summary', 'Personal letter', 'Diary']), correctId: 'A', explanation: "Dictionaries are the primary tool for word meanings." },
+    // Set 5
+    { id: 21, scenario: "Primary source:", options: createOptions(['Autobiography', 'Biography', 'Textbook', 'Research review']), correctId: 'A', explanation: "An autobiography is a person's own account of their life." },
+    { id: 22, scenario: "Primary source contains:", options: createOptions(['Compiled data', 'Interpreted content', 'Firsthand information', 'Summarized analysis']), correctId: 'C', explanation: "Direct, original information is the core of a primary source." },
+    { id: 23, scenario: "Secondary source:", options: createOptions(['Interview transcript', 'Analytical research article', 'Personal diary', 'Raw survey']), correctId: 'B', explanation: "Research articles that analyze data are secondary sources." },
+    { id: 24, scenario: "Tertiary source:", options: createOptions(['Encyclopedia', 'Original photograph', 'Diary', 'Field notes']), correctId: 'A', explanation: "Encyclopedias are classic examples of tertiary sources." },
+    { id: 25, scenario: "Reference tool for quick facts:", options: createOptions(['Dictionary', 'Biography', 'Personal diary', 'Manuscript']), correctId: 'A', explanation: "Dictionaries are used for quick reference of word facts." },
+    // Set 6
+    { id: 26, scenario: "Which is a primary source?", options: createOptions(['Autobiography', 'Encyclopedia', 'Textbook', 'Review article']), correctId: 'A', explanation: "Autobiographies provide a firsthand account of a person's life." },
+    { id: 27, scenario: "Primary sources are characterized by:", options: createOptions(['Firsthand evidence', 'Summarized content', 'Analysis of research', 'Compiling information']), correctId: 'A', explanation: "Direct evidence is the defining feature of primary sources." },
+    { id: 28, scenario: "Which is a secondary source?", options: createOptions(['Field notebook', 'Scholarly article', 'Personal diary', 'Photograph']), correctId: 'B', explanation: "Scholarly articles analyze and interpret primary data." },
+    { id: 29, scenario: "Which is a tertiary source?", options: createOptions(['Dictionary', 'Interview transcript', 'Original manuscript', 'Research log']), correctId: 'A', explanation: "Dictionaries compile and summarize information about words." },
+    { id: 30, scenario: "Tool for quick reference:", options: createOptions(['Encyclopedia', 'Diary', 'Survey form', 'Manuscript']), correctId: 'A', explanation: "Encyclopedias are designed for quick access to summarized knowledge." },
+    // Set 7
+    { id: 31, scenario: "Identify a primary source.", options: createOptions(['Court testimony', 'Textbook', 'Review article', 'Almanac']), correctId: 'A', explanation: "Testimony is a direct account from a witness." },
+    { id: 32, scenario: "Primary sources provide:", options: createOptions(['Compiled summaries', 'Firsthand information', 'Interpretations', 'Research reviews']), correctId: 'B', explanation: "They offer original, uninterpreted information." },
+    { id: 33, scenario: "Which is a secondary source?", options: createOptions(['Analytical journal article', 'Personal diary', 'Raw dataset', 'Interview recording']), correctId: 'A', explanation: "Analytical articles interpret primary research." },
+    { id: 34, scenario: "Which is a tertiary source?", options: createOptions(['Handbook', 'Field notes', 'Audio recording', 'Manuscript']), correctId: 'A', explanation: "Handbooks compile and summarize information for easy reference." },
+    { id: 35, scenario: "Reference tool for definitions:", options: createOptions(['Dictionary', 'Biography', 'Research article', 'Field notebook']), correctId: 'A', explanation: "Dictionaries are the standard for definitions." },
+    // Set 8
+    { id: 36, scenario: "Which is a primary source?", options: createOptions(['Original photograph', 'Textbook summary', 'Encyclopedia entry', 'Review article']), correctId: 'A', explanation: "Photographs are original records of events." },
+    { id: 37, scenario: "Primary sources provide:", options: createOptions(['Summaries', 'Firsthand experience', 'Analytical interpretations', 'Compilations']), correctId: 'B', explanation: "They reflect direct experience or observation." },
+    { id: 38, scenario: "Secondary source:", options: createOptions(['Review journal article', 'Personal diary', 'Field notes', 'Raw survey data']), correctId: 'A', explanation: "Review articles synthesize existing research." },
+    { id: 39, scenario: "Tertiary source example:", options: createOptions(['Index', 'Interview transcript', 'Laboratory log', 'Diary']), correctId: 'A', explanation: "Indexes are tertiary as they point to other sources." },
+    { id: 40, scenario: "Quick reference tool:", options: createOptions(['Dictionary', 'Autobiography', 'Survey response', 'Manuscript']), correctId: 'A', explanation: "Dictionaries provide rapid access to word information." },
+    // Set 9
+    { id: 41, scenario: "Which is a primary source?", options: createOptions(['Personal diary', 'Textbook', 'Review article', 'Almanac']), correctId: 'A', explanation: "Diaries are personal, firsthand records." },
+    { id: 42, scenario: "Primary sources provide:", options: createOptions(['Firsthand information', 'Compiled summaries', 'Research analysis', 'Encyclopedic facts']), correctId: 'A', explanation: "They are original sources of information." },
+    { id: 43, scenario: "Which is a secondary source?", options: createOptions(['Analytical research article', 'Audio recording', 'Field notebook', 'Survey data']), correctId: 'A', explanation: "Research articles analyze primary data." },
+    { id: 44, scenario: "Which is a tertiary source?", options: createOptions(['Handbook', 'Diary', 'Manuscript', 'Photograph']), correctId: 'A', explanation: "Handbooks are tertiary reference materials." },
+    { id: 45, scenario: "Tool for definitions:", options: createOptions(['Dictionary', 'Research report', 'Personal diary', 'Biography']), correctId: 'A', explanation: "Dictionaries define terms." },
+    // Set 10
+    { id: 46, scenario: "Primary source:", options: createOptions(['Autobiography', 'Textbook', 'Research review', 'Biography']), correctId: 'A', explanation: "Autobiographies are firsthand life accounts." },
+    { id: 47, scenario: "Primary sources provide:", options: createOptions(['Firsthand evidence', 'Summaries', 'Analysis', 'Compilations']), correctId: 'A', explanation: "They serve as direct evidence." },
+    { id: 48, scenario: "Secondary source:", options: createOptions(['Review article', 'Diary', 'Original photograph', 'Manuscript']), correctId: 'A', explanation: "Review articles interpret primary works." },
+    { id: 49, scenario: "Tertiary source:", options: createOptions(['Encyclopedia', 'Field notes', 'Diary', 'Raw dataset']), correctId: 'A', explanation: "Encyclopedias compile information." },
+    { id: 50, scenario: "Quick reference tool:", options: createOptions(['Dictionary', 'Survey form', 'Manuscript', 'Autobiography']), correctId: 'A', explanation: "Dictionaries are for quick reference." }
   ],
   average: [
-    {
-      id: 6,
-      scenario: "Demonstrate the ability to distinguish PRIMARY sources by selecting the best example of original data.",
-      options: [
-        { id: '1', label: 'Review article' },
-        { id: '2', label: 'Textbook' },
-        { id: '3', label: 'Raw interview transcripts' },
-        { id: '4', label: 'Encyclopedia' },
-        { id: '5', label: 'Bibliography' },
-        { id: '6', label: 'Study guide' }
-      ],
-      correctId: '3',
-      explanation: "Raw interview transcripts are primary sources as they record the exact words of the interviewee without external interpretation."
-    },
-    {
-      id: 7,
-      scenario: "Which of these is a SECONDARY source often used to get an overview of a topic?",
-      options: [
-        { id: '1', label: 'Autobiography' },
-        { id: '2', label: 'Speeches' },
-        { id: '3', label: 'Documentary film' },
-        { id: '4', label: 'Scholarly journal article' },
-        { id: '5', label: 'Government records' },
-        { id: '6', label: 'Original artifacts' }
-      ],
-      correctId: '4',
-      explanation: "Scholarly journal articles are typically secondary sources because they analyze and interpret primary research or events."
-    },
-    {
-      id: 8,
-      scenario: "A map created by a cartographer in 1500 showing the 'New World' is a:",
-      options: [
-        { id: '1', label: 'Secondary Source' },
-        { id: '2', label: 'Primary Source' },
-        { id: '3', label: 'Tertiary Source' },
-        { id: '4', label: 'Modern Interpretation' },
-        { id: '5', label: 'Reference Work' },
-        { id: '6', label: 'Summary' }
-      ],
-      correctId: '2',
-      explanation: "A map created during the time period being studied is a primary source reflecting the knowledge of that era."
-    },
-    { id: 9, scenario: "Identify the SECONDARY source among these options:", options: [{ id: '1', label: 'Oral history' }, { id: '2', label: 'Legal documents' }, { id: '3', label: 'Literary criticism' }, { id: '4', label: 'Manuscripts' }, { id: '5', label: 'Photographs' }, { id: '6', label: 'Maps' }], correctId: '3', explanation: "Literary criticism is a secondary source as it analyzes and interprets a primary work of literature." },
-    { id: 10, scenario: "Which is a PRIMARY source for studying a historical election?", options: [{ id: '1', label: 'Political science textbook' }, { id: '2', label: 'Voter registration records' }, { id: '3', label: 'History channel documentary' }, { id: '4', label: 'Encyclopedia entry' }, { id: '5', label: 'News analysis' }, { id: '6', label: 'Biography of the winner' }], correctId: '2', explanation: "Voter registration records are original government documents from the time, making them primary sources." }
+    // Set 1
+    { id: 51, scenario: "Identify the primary source:", options: createOptions(['Review article', 'Textbook', 'Interview recording', 'Encyclopedia', 'Bibliography', 'Study guide']), correctId: 'C', explanation: "An interview recording is a direct record of a conversation." },
+    { id: 52, scenario: "Best secondary source:", options: createOptions(['Original photograph', 'Research review article', 'Census form', 'Interview recording', 'Field notes', 'Survey questionnaire']), correctId: 'B', explanation: "Review articles synthesize and analyze primary research." },
+    { id: 53, scenario: "Tertiary source for background knowledge:", options: createOptions(['Raw dataset', 'Field notebook', 'Dictionary', 'Interview transcript', 'Personal letter', 'Research log']), correctId: 'C', explanation: "Dictionaries provide basic definitions and overviews." },
+    { id: 54, scenario: "NOT a tertiary source:", options: createOptions(['Almanac', 'Index', 'Encyclopedia', 'Original research article', 'Handbook', 'Bibliography']), correctId: 'D', explanation: "Original research articles are primary sources." },
+    { id: 55, scenario: "Secondary source task:", options: createOptions(['Recording raw data', 'Collecting surveys', 'Interpreting research results', 'Observing experiments', 'Conducting interviews', 'Taking field notes']), correctId: 'C', explanation: "Interpretation is a key function of secondary sources." },
+    // Set 2
+    { id: 56, scenario: "Primary source:", options: createOptions(['Personal letter', 'Review article', 'Encyclopedia', 'Study guide', 'Biography', 'Textbook']), correctId: 'A', explanation: "Personal letters are original, firsthand documents." },
+    { id: 57, scenario: "Secondary source example:", options: createOptions(['Research review article', 'Diary', 'Raw survey data', 'Photograph', 'Interview transcript', 'Manuscript']), correctId: 'A', explanation: "Review articles analyze existing primary data." },
+    { id: 58, scenario: "Tertiary source:", options: createOptions(['Almanac', 'Personal diary', 'Field notes', 'Audio recording', 'Manuscript', 'Research log']), correctId: 'A', explanation: "Almanacs compile facts from many sources." },
+    { id: 59, scenario: "NOT a tertiary source:", options: createOptions(['Handbook', 'Encyclopedia', 'Field notes', 'Index', 'Bibliography', 'Almanac']), correctId: 'C', explanation: "Field notes are primary sources." },
+    { id: 60, scenario: "Secondary source task:", options: createOptions(['Summarizing findings', 'Recording observations', 'Conducting interviews', 'Collecting raw data', 'Surveying participants', 'Taking field notes']), correctId: 'A', explanation: "Summarizing findings involves processing primary information." },
+    // Set 3
+    { id: 61, scenario: "Which is a primary source?", options: createOptions(['Textbook', 'Original photograph', 'Review article', 'Encyclopedia', 'Bibliography', 'Field guide']), correctId: 'B', explanation: "Photographs are direct visual records." },
+    { id: 62, scenario: "A secondary source is best exemplified by:", options: createOptions(['Diary of a participant', 'Research review article', 'Raw survey data', 'Personal letter', 'Photograph', 'Laboratory log']), correctId: 'B', explanation: "Review articles interpret primary research." },
+    { id: 63, scenario: "Which is a tertiary source?", options: createOptions(['Dictionary', 'Personal diary', 'Research notebook', 'Audio recording', 'Manuscript', 'Survey log']), correctId: 'A', explanation: "Dictionaries are tertiary reference works." },
+    { id: 64, scenario: "Identify the material that is NOT a tertiary source.", options: createOptions(['Handbook', 'Almanac', 'Bibliography', 'Personal diary', 'Index', 'Encyclopedia']), correctId: 'D', explanation: "Personal diaries are primary sources." },
+    { id: 65, scenario: "Which task BEST fits a secondary source?", options: createOptions(['Collecting raw data', 'Conducting interviews', 'Interpreting research results', 'Recording firsthand accounts', 'Taking field notes', 'Surveying participants']), correctId: 'C', explanation: "Interpreting results is a secondary source activity." },
+    // Set 4
+    { id: 66, scenario: "Which is a primary source?", options: createOptions(['Autobiography', 'Research article', 'Review article', 'Encyclopedia', 'Textbook', 'Study guide']), correctId: 'A', explanation: "Autobiographies are firsthand life accounts." },
+    { id: 67, scenario: "Which is a secondary source?", options: createOptions(['Research analysis journal', 'Interview recording', 'Raw dataset', 'Personal diary', 'Original manuscript', 'Photograph']), correctId: 'A', explanation: "Analysis journals interpret primary data." },
+    { id: 68, scenario: "Best tertiary source for quick reference:", options: createOptions(['Almanac', 'Field notebook', 'Raw survey data', 'Manuscript', 'Interview transcript', 'Experimental log']), correctId: 'A', explanation: "Almanacs provide quick access to compiled facts." },
+    { id: 69, scenario: "Identify the item that is NOT a tertiary source.", options: createOptions(['Index', 'Handbook', 'Encyclopedia', 'Research journal', 'Bibliography', 'Almanac']), correctId: 'D', explanation: "Research journals contain primary or secondary research." },
+    { id: 70, scenario: "Which activity BEST fits a secondary source?", options: createOptions(['Summarizing research findings', 'Recording raw observations', 'Conducting interviews', 'Collecting survey responses', 'Taking field notes', 'Logging experimental data']), correctId: 'A', explanation: "Summarizing is a key secondary source function." },
+    // Set 5
+    { id: 71, scenario: "Primary source example:", options: createOptions(['Personal letter', 'Textbook', 'Research review', 'Almanac', 'Bibliography', 'Field guide']), correctId: 'A', explanation: "Letters are original firsthand documents." },
+    { id: 72, scenario: "Secondary source example:", options: createOptions(['Analytical journal article', 'Autobiography', 'Interview recording', 'Photograph', 'Diary', 'Raw survey data']), correctId: 'A', explanation: "Analytical articles interpret primary evidence." },
+    { id: 73, scenario: "Which is a tertiary source?", options: createOptions(['Encyclopedia', 'Raw dataset', 'Field notes', 'Manuscript', 'Audio recording', 'Diary']), correctId: 'A', explanation: "Encyclopedias compile and summarize information." },
+    { id: 74, scenario: "Identify the item that is NOT a tertiary source:", options: createOptions(['Index', 'Handbook', 'Almanac', 'Research review article', 'Bibliography', 'Dictionary']), correctId: 'D', explanation: "Research reviews are secondary sources." },
+    { id: 75, scenario: "Which task BEST fits a secondary source?", options: createOptions(['Interpreting collected data', 'Recording first-hand interviews', 'Collecting raw data', 'Observing experiments', 'Taking field notes', 'Surveying participants']), correctId: 'A', explanation: "Interpretation is a secondary source task." },
+    // Set 6
+    { id: 76, scenario: "Which is a primary source?", options: createOptions(['Court testimony', 'Review article', 'Encyclopedia', 'Research summary', 'Biography', 'Textbook']), correctId: 'A', explanation: "Testimony is a direct firsthand account." },
+    { id: 77, scenario: "Secondary source example:", options: createOptions(['Review journal article', 'Diary', 'Original photograph', 'Field notebook', 'Manuscript', 'Survey dataset']), correctId: 'A', explanation: "Review articles synthesize primary research." },
+    { id: 78, scenario: "Best tertiary source for reference:", options: createOptions(['Almanac', 'Personal diary', 'Field notes', 'Raw dataset', 'Interview transcript', 'Experimental log']), correctId: 'A', explanation: "Almanacs are standard tertiary reference tools." },
+    { id: 79, scenario: "Which is NOT a tertiary source?", options: createOptions(['Handbook', 'Encyclopedia', 'Research review', 'Index', 'Bibliography', 'Almanac']), correctId: 'C', explanation: "Research reviews are secondary sources." },
+    { id: 80, scenario: "Task for a secondary source:", options: createOptions(['Summarizing research', 'Recording firsthand data', 'Conducting interviews', 'Collecting raw statistics', 'Surveying participants', 'Taking field notes']), correctId: 'A', explanation: "Summarizing is a secondary source activity." },
+    // Set 7
+    { id: 81, scenario: "Which is a primary source?", options: createOptions(['Diary', 'Textbook', 'Research review', 'Encyclopedia', 'Field guide', 'Review article']), correctId: 'A', explanation: "Diaries are original firsthand records." },
+    { id: 82, scenario: "Secondary source example:", options: createOptions(['Analytical research article', 'Original photograph', 'Field notebook', 'Raw survey data', 'Interview transcript', 'Manuscript']), correctId: 'A', explanation: "Analytical articles interpret primary data." },
+    { id: 83, scenario: "Which is a tertiary source?", options: createOptions(['Dictionary', 'Personal diary', 'Field notes', 'Manuscript', 'Audio recording', 'Research log']), correctId: 'A', explanation: "Dictionaries are tertiary reference works." },
+    { id: 84, scenario: "NOT a tertiary source:", options: createOptions(['Handbook', 'Index', 'Encyclopedia', 'Review journal article', 'Bibliography', 'Almanac']), correctId: 'D', explanation: "Review articles are secondary sources." },
+    { id: 85, scenario: "Task for secondary source:", options: createOptions(['Interpreting findings', 'Recording raw data', 'Conducting interviews', 'Taking field notes', 'Collecting samples', 'Observing experiments']), correctId: 'A', explanation: "Interpreting findings is a secondary source task." },
+    // Set 8
+    { id: 86, scenario: "Primary source example:", options: createOptions(['Autobiography', 'Textbook', 'Research review', 'Almanac', 'Bibliography', 'Field guide']), correctId: 'A', explanation: "Autobiographies are firsthand life accounts." },
+    { id: 87, scenario: "Secondary source example:", options: createOptions(['Research review article', 'Personal diary', 'Raw survey data', 'Photograph', 'Interview transcript', 'Manuscript']), correctId: 'A', explanation: "Review articles analyze primary research." },
+    { id: 88, scenario: "Tertiary source example:", options: createOptions(['Encyclopedia', 'Field notebook', 'Interview transcript', 'Manuscript', 'Audio recording', 'Diary']), correctId: 'A', explanation: "Encyclopedias compile information from many sources." },
+    { id: 89, scenario: "NOT a tertiary source:", options: createOptions(['Handbook', 'Index', 'Research review article', 'Almanac', 'Bibliography', 'Dictionary']), correctId: 'C', explanation: "Research reviews are secondary sources." },
+    { id: 90, scenario: "Task for secondary source:", options: createOptions(['Summarizing research', 'Recording firsthand data', 'Collecting raw data', 'Observing experiments', 'Taking field notes', 'Surveying participants']), correctId: 'A', explanation: "Summarizing is a secondary source function." },
+    // Set 9
+    { id: 91, scenario: "Primary source:", options: createOptions(['Court testimony', 'Textbook', 'Review article', 'Encyclopedia', 'Biography', 'Field guide']), correctId: 'A', explanation: "Testimony is a direct firsthand account." },
+    { id: 92, scenario: "Secondary source:", options: createOptions(['Analytical research article', 'Diary', 'Original photograph', 'Field notebook', 'Manuscript', 'Survey dataset']), correctId: 'A', explanation: "Analytical articles interpret primary data." },
+    { id: 93, scenario: "Tertiary source:", options: createOptions(['Dictionary', 'Field notebook', 'Manuscript', 'Raw dataset', 'Audio recording', 'Personal diary']), correctId: 'A', explanation: "Dictionaries are tertiary reference materials." },
+    { id: 94, scenario: "Not tertiary source:", options: createOptions(['Index', 'Handbook', 'Research review article', 'Almanac', 'Bibliography', 'Encyclopedia']), correctId: 'C', explanation: "Research reviews are secondary sources." },
+    { id: 95, scenario: "Secondary source task:", options: createOptions(['Interpreting findings', 'Recording firsthand accounts', 'Collecting raw data', 'Observing experiments', 'Surveying participants', 'Taking field notes']), correctId: 'A', explanation: "Interpreting findings is a secondary source task." },
+    // Set 10
+    { id: 96, scenario: "Primary source:", options: createOptions(['Personal diary', 'Textbook', 'Review article', 'Encyclopedia', 'Almanac', 'Field guide']), correctId: 'A', explanation: "Diaries are original firsthand records." },
+    { id: 97, scenario: "Secondary source:", options: createOptions(['Research review article', 'Autobiography', 'Original photograph', 'Manuscript', 'Diary', 'Survey dataset']), correctId: 'A', explanation: "Review articles synthesize primary research." },
+    { id: 98, scenario: "Tertiary source:", options: createOptions(['Encyclopedia', 'Field notebook', 'Diary', 'Raw dataset', 'Audio recording', 'Manuscript']), correctId: 'A', explanation: "Encyclopedias are tertiary reference works." },
+    { id: 99, scenario: "Not tertiary source:", options: createOptions(['Research review article', 'Index', 'Handbook', 'Almanac', 'Bibliography', 'Dictionary']), correctId: 'A', explanation: "Research reviews are secondary sources." },
+    { id: 100, scenario: "Secondary source task:", options: createOptions(['Summarizing findings', 'Recording firsthand accounts', 'Conducting interviews', 'Collecting raw data', 'Observing experiments', 'Taking field notes']), correctId: 'A', explanation: "Summarizing is a secondary source activity." }
   ],
   difficult: [
-    {
-      id: 11,
-      scenario: "Apply competency in reference services by selecting the source that provides direct evidence for original analysis.",
-      options: [
-        { id: '1', label: 'Personal diary' },
-        { id: '2', label: 'Interview transcript' },
-        { id: '3', label: 'Raw census data' },
-        { id: '4', label: 'Original photograph' },
-        { id: '5', label: 'Textbook chapter' },
-        { id: '6', label: 'Bibliography' },
-        { id: '7', label: 'Index' },
-        { id: '8', label: 'Abstract' },
-        { id: '9', label: 'Research summary' },
-        { id: '10', label: 'Commentary article' }
-      ],
-      correctId: '3',
-      explanation: "Raw census data is a primary source providing the original, uninterpreted facts used for further analysis."
-    },
-    {
-      id: 12,
-      scenario: "Which of these is a TERTIARY source that indexes or summarizes other sources?",
-      options: [
-        { id: '1', label: 'Memoir' },
-        { id: '2', label: 'Public opinion poll' },
-        { id: '3', label: 'Bibliography' },
-        { id: '4', label: 'Audio recording' },
-        { id: '5', label: 'Official report' },
-        { id: '6', label: 'Newspaper editorial' },
-        { id: '7', label: 'Personal blog' },
-        { id: '8', label: 'Court testimony' },
-        { id: '9', label: 'Scientific paper' },
-        { id: '10', label: 'Historical novel' }
-      ],
-      correctId: '3',
-      explanation: "A bibliography is often considered a tertiary source because it indexes and lists primary and secondary sources."
-    },
-    { id: 13, scenario: "Identify the PRIMARY source for a study on ancient architecture:", options: [{ id: '1', label: 'Architectural history book' }, { id: '2', label: 'Modern 3D reconstruction' }, { id: '3', label: 'Original blueprints' }, { id: '4', label: 'Travel guide' }, { id: '5', label: 'Encyclopedia of buildings' }, { id: '6', label: 'Documentary on ruins' }, { id: '7', label: 'Museum catalog' }, { id: '8', label: 'Archaeological report summary' }, { id: '9', label: 'Art history lecture' }, { id: '10', label: 'Magazine feature' }], correctId: '3', explanation: "Original blueprints are primary sources created at the time of construction." },
-    { id: 14, scenario: "Which is a SECONDARY source regarding a famous trial?", options: [{ id: '1', label: 'Court transcript' }, { id: '2', label: 'Evidence exhibits' }, { id: '3', label: 'Law review article' }, { id: '4', label: 'Judge\'s ruling' }, { id: '5', label: 'Jury summons' }, { id: '6', label: 'Witness statement' }, { id: '7', label: 'Police report' }, { id: '8', label: 'Arrest record' }, { id: '9', label: 'Defendant\'s confession' }, { id: '10', label: 'Crime scene photo' }], correctId: '3', explanation: "A law review article analyzes the trial, making it a secondary source." },
-    { id: 15, scenario: "Select the PRIMARY source for a musician's creative process:", options: [{ id: '1', label: 'Music review' }, { id: '2', label: 'Biography of the composer' }, { id: '3', label: 'Handwritten score with notes' }, { id: '4', label: 'Music theory textbook' }, { id: '5', label: 'Fan website' }, { id: '6', label: 'Podcast interview summary' }, { id: '7', label: 'Concert program' }, { id: '8', label: 'Discography list' }, { id: '9', label: 'Radio documentary' }, { id: '10', label: 'Documentary film' }], correctId: '3', explanation: "Handwritten scores with the composer's notes are primary sources showing the original creative work." }
+    // Set 1
+    { id: 101, scenario: "Source providing direct evidence for research analysis:", options: createOptions(['Textbook', 'Encyclopedia', 'Raw census data', 'Subject guide', 'Bibliography', 'Index', 'Abstract', 'Commentary article', 'Research summary', 'Handbook']), correctId: 'C', explanation: "Raw census data is a primary source providing original facts." },
+    { id: 102, scenario: "NOT a primary source:", options: createOptions(['Diary', 'Interview transcript', 'Original photograph', 'Literature review', 'Autobiography', 'Raw survey data', 'Court testimony', 'Field notes', 'Audio recording', 'Original manuscript']), correctId: 'D', explanation: "Literature reviews analyze and summarize existing research." },
+    { id: 103, scenario: "Best secondary source for scholarly interpretations:", options: createOptions(['Raw dataset', 'Field notebook', 'Review journal article', 'Census form', 'Interview transcript', 'Photograph', 'Manuscript', 'Diary', 'Audio recording', 'Experimental log']), correctId: 'C', explanation: "Review articles provide scholarly interpretation of research." },
+    { id: 104, scenario: "Best source to define a term:", options: createOptions(['Diary', 'Encyclopedia', 'Interview transcript', 'Raw dataset', 'Field notes', 'Survey form', 'Laboratory log', 'Court testimony', 'Personal letter', 'Audio recording']), correctId: 'B', explanation: "Encyclopedias provide broad definitions and overviews." },
+    { id: 105, scenario: "Resource designed to compile and organize information:", options: createOptions(['Raw statistics', 'Eyewitness account', 'Information compilation tool', 'Personal narrative', 'Interview result', 'Survey response', 'Field observation', 'Experimental output', 'Archival document', 'Original data']), correctId: 'C', explanation: "Compilation tools are tertiary sources designed to organize info." },
+    // Set 2
+    { id: 106, scenario: "Which is a primary source?", options: createOptions(['Original manuscript', 'Review article', 'Encyclopedia', 'Research summary', 'Bibliography', 'Index', 'Audio recording', 'Commentary article', 'Handbook', 'Field guide']), correctId: 'A', explanation: "Original manuscripts are firsthand primary documents." },
+    { id: 107, scenario: "Which is NOT a primary source?", options: createOptions(['Diary', 'Interview transcript', 'Literature review', 'Court testimony', 'Autobiography', 'Raw survey data', 'Personal letters', 'Original photograph', 'Field notes', 'Original manuscript']), correctId: 'C', explanation: "Literature reviews are secondary sources." },
+    { id: 108, scenario: "Best secondary source for scholarly interpretation:", options: createOptions(['Review journal article', 'Field notebook', 'Raw dataset', 'Personal diary', 'Manuscript', 'Audio recording', 'Photograph', 'Interview transcript', 'Experimental log', 'Census form']), correctId: 'A', explanation: "Review articles provide scholarly analysis." },
+    { id: 109, scenario: "Best tertiary source to define a term:", options: createOptions(['Diary', 'Interview transcript', 'Encyclopedia', 'Raw dataset', 'Field notes', 'Survey form', 'Laboratory log', 'Court testimony', 'Personal letter', 'Audio recording']), correctId: 'C', explanation: "Encyclopedias define and summarize topics." },
+    { id: 110, scenario: "Resource designed to compile and organize existing information:", options: createOptions(['Raw statistics', 'Eyewitness account', 'Information compilation tool', 'Personal narrative', 'Interview result', 'Survey response', 'Field observation', 'Experimental output', 'Archival document', 'Original data']), correctId: 'C', explanation: "Compilation tools organize existing knowledge." },
+    // Set 3
+    { id: 111, scenario: "Primary source in historical research:", options: createOptions(['Original diary', 'Review article', 'Encyclopedia', 'Handbook', 'Bibliography', 'Index', 'Commentary article', 'Research summary', 'Audio recording', 'Manuscript']), correctId: 'A', explanation: "Diaries are original firsthand historical records." },
+    { id: 112, scenario: "Secondary source:", options: createOptions(['Research review article', 'Original photograph', 'Field notes', 'Raw survey', 'Interview transcript', 'Personal diary', 'Manuscript', 'Audio recording', 'Experimental log', 'Census data']), correctId: 'A', explanation: "Review articles interpret primary data." },
+    { id: 113, scenario: "Which is a tertiary source?", options: createOptions(['Dictionary', 'Diary', 'Raw dataset', 'Manuscript', 'Field notebook', 'Research notes', 'Audio recording', 'Survey form', 'Autobiography', 'Interview transcript']), correctId: 'A', explanation: "Dictionaries are tertiary reference works." },
+    { id: 114, scenario: "NOT a tertiary source:", options: createOptions(['Handbook', 'Index', 'Encyclopedia', 'Research review article', 'Bibliography', 'Almanac', 'Dictionary', 'Field guide', 'Glossary', 'Manual']), correctId: 'D', explanation: "Research reviews are secondary sources." },
+    { id: 115, scenario: "Best activity for secondary source:", options: createOptions(['Interpreting data', 'Recording firsthand observations', 'Collecting raw data', 'Surveying participants', 'Taking field notes', 'Logging experimental results', 'Conducting interviews', 'Archiving materials', 'Audio recording', 'Photographing events']), correctId: 'A', explanation: "Data interpretation is a secondary source activity." },
+    // Set 4
+    { id: 116, scenario: "Primary source:", options: createOptions(['Original manuscript', 'Research review article', 'Textbook', 'Encyclopedia', 'Bibliography', 'Index', 'Commentary article', 'Handbook', 'Audio recording', 'Field notes']), correctId: 'A', explanation: "Original manuscripts are primary sources." },
+    { id: 117, scenario: "Not a primary source:", options: createOptions(['Literature review', 'Diary', 'Original photograph', 'Autobiography', 'Interview transcript', 'Raw survey data', 'Court testimony', 'Audio recording', 'Original manuscript', 'Field notes']), correctId: 'A', explanation: "Literature reviews are secondary sources." },
+    { id: 118, scenario: "Secondary source:", options: createOptions(['Review journal article', 'Raw dataset', 'Field notebook', 'Personal diary', 'Experimental log', 'Interview transcript', 'Manuscript', 'Audio recording', 'Census form', 'Photograph']), correctId: 'A', explanation: "Review articles analyze primary research." },
+    { id: 119, scenario: "Best tertiary source to locate facts quickly:", options: createOptions(['Encyclopedia', 'Diary', 'Manuscript', 'Raw dataset', 'Audio recording', 'Field notes', 'Survey form', 'Research log', 'Autobiography', 'Interview transcript']), correctId: 'A', explanation: "Encyclopedias are designed for quick fact-finding." },
+    { id: 120, scenario: "Resource designed to compile info:", options: createOptions(['Information compilation tool', 'Eyewitness account', 'Personal narrative', 'Survey response', 'Field observation', 'Experimental output', 'Archival document', 'Raw statistics', 'Manuscript', 'Original data']), correctId: 'A', explanation: "Compilation tools are tertiary sources." },
+    // Set 5
+    { id: 121, scenario: "Primary source:", options: createOptions(['Court testimony', 'Review article', 'Textbook', 'Encyclopedia', 'Handbook', 'Index', 'Commentary article', 'Bibliography', 'Audio recording', 'Research summary']), correctId: 'A', explanation: "Testimony is a direct firsthand account." },
+    { id: 122, scenario: "Not a primary source:", options: createOptions(['Literature review', 'Original diary', 'Interview transcript', 'Autobiography', 'Raw survey data', 'Court testimony', 'Original photograph', 'Field notes', 'Audio recording', 'Original manuscript']), correctId: 'A', explanation: "Literature reviews are secondary sources." },
+    { id: 123, scenario: "Secondary source:", options: createOptions(['Review journal article', 'Field notebook', 'Personal diary', 'Raw dataset', 'Photograph', 'Manuscript', 'Audio recording', 'Interview transcript', 'Experimental log', 'Census form']), correctId: 'A', explanation: "Review articles interpret primary research." },
+    { id: 124, scenario: "Tertiary source for definitions:", options: createOptions(['Dictionary', 'Diary', 'Manuscript', 'Field notes', 'Raw dataset', 'Audio recording', 'Survey form', 'Research log', 'Personal letter', 'Interview transcript']), correctId: 'A', explanation: "Dictionaries are tertiary reference works." },
+    { id: 125, scenario: "Activity suitable for secondary source:", options: createOptions(['Interpreting collected data', 'Conducting interviews', 'Recording firsthand observations', 'Taking field notes', 'Logging experimental output', 'Surveying participants', 'Photographing events', 'Archiving documents', 'Audio recording', 'Compiling raw statistics']), correctId: 'A', explanation: "Interpreting data is a secondary source task." },
+    // Set 6
+    { id: 126, scenario: "Primary source:", options: createOptions(['Original manuscript', 'Textbook', 'Review article', 'Encyclopedia', 'Field guide', 'Index', 'Handbook', 'Audio recording', 'Diary', 'Research summary']), correctId: 'I', explanation: "Diaries are original firsthand records." },
+    { id: 127, scenario: "Secondary source:", options: createOptions(['Research review article', 'Field notebook', 'Raw survey dataset', 'Interview transcript', 'Photograph', 'Manuscript', 'Audio recording', 'Diary', 'Experimental log', 'Census data']), correctId: 'A', explanation: "Review articles analyze primary research." },
+    { id: 128, scenario: "Tertiary source:", options: createOptions(['Encyclopedia', 'Dictionary', 'Handbook', 'Almanac', 'Index', 'Glossary', 'Manual', 'Field guide', 'Bibliography', 'Study guide']), correctId: 'B', explanation: "Dictionaries are tertiary reference materials." },
+    { id: 129, scenario: "NOT a tertiary source:", options: createOptions(['Research review article', 'Almanac', 'Handbook', 'Index', 'Encyclopedia', 'Glossary', 'Manual', 'Field guide', 'Bibliography', 'Study guide']), correctId: 'A', explanation: "Research reviews are secondary sources." },
+    { id: 130, scenario: "Task for secondary source:", options: createOptions(['Interpreting findings', 'Recording raw data', 'Conducting interviews', 'Observing experiments', 'Surveying participants', 'Logging field notes', 'Archiving materials', 'Audio recording', 'Photographing events', 'J. Collecting samples']), correctId: 'A', explanation: "Interpreting findings is a secondary source task." },
+    // Set 7
+    { id: 131, scenario: "Primary source:", options: createOptions(['Original photograph', 'Research review article', 'Textbook', 'Encyclopedia', 'Field guide', 'Handbook', 'Diary', 'Manuscript', 'Audio recording', 'Survey data']), correctId: 'A', explanation: "Photographs are original firsthand records." },
+    { id: 132, scenario: "Secondary source:", options: createOptions(['Review journal article', 'Field notebook', 'Raw survey dataset', 'Personal diary', 'Manuscript', 'Interview transcript', 'Photograph', 'Audio recording', 'Experimental log', 'Census form']), correctId: 'A', explanation: "Review articles synthesize primary research." },
+    { id: 133, scenario: "Tertiary source:", options: createOptions(['Dictionary', 'Encyclopedia', 'Handbook', 'Index', 'Glossary', 'Manual', 'Study guide', 'Almanac', 'Field guide', 'Bibliography']), correctId: 'A', explanation: "Dictionaries are tertiary reference works." },
+    { id: 134, scenario: "Not a tertiary source:", options: createOptions(['Research review article', 'Almanac', 'Handbook', 'Index', 'Glossary', 'Encyclopedia', 'Manual', 'Field guide', 'Bibliography', 'Study guide']), correctId: 'A', explanation: "Research reviews are secondary sources." },
+    { id: 135, scenario: "Activity for secondary source:", options: createOptions(['Interpreting data', 'Recording raw observations', 'Surveying participants', 'Conducting interviews', 'Logging field experiments', 'Archiving materials', 'Photographing events', 'Audio recording', 'Collecting samples', 'Taking notes']), correctId: 'A', explanation: "Interpreting data is a secondary source task." },
+    // Set 8
+    { id: 136, scenario: "Primary source:", options: createOptions(['Diary', 'Textbook', 'Review article', 'Research summary', 'Manuscript', 'Bibliography', 'Index', 'Handbook', 'Audio recording', 'Field guide']), correctId: 'A', explanation: "Diaries are original firsthand records." },
+    { id: 137, scenario: "Secondary source:", options: createOptions(['Research review article', 'Raw dataset', 'Field notebook', 'Interview transcript', 'Manuscript', 'Audio recording', 'Photograph', 'Census form', 'Experimental log', 'Diary']), correctId: 'A', explanation: "Review articles interpret primary research." },
+    { id: 138, scenario: "Tertiary source:", options: createOptions(['Encyclopedia', 'Handbook', 'Index', 'Glossary', 'Dictionary', 'Almanac', 'Field guide', 'Study guide', 'Bibliography', 'Manual']), correctId: 'A', explanation: "Encyclopedias are tertiary reference works." },
+    { id: 139, scenario: "Not a tertiary source:", options: createOptions(['Research review article', 'Almanac', 'Handbook', 'Index', 'Encyclopedia', 'Glossary', 'Manual', 'Field guide', 'Bibliography', 'Study guide']), correctId: 'C', explanation: "Research reviews are secondary sources." },
+    { id: 140, scenario: "Task for secondary source:", options: createOptions(['Interpreting findings', 'Recording firsthand accounts', 'Collecting raw data', 'Conducting interviews', 'Surveying participants', 'Logging experiments', 'Archiving materials', 'Photographing events', 'Audio recording', 'Taking field notes']), correctId: 'A', explanation: "Interpreting findings is a secondary source task." },
+    // Set 9
+    { id: 141, scenario: "Primary source:", options: createOptions(['Original manuscript', 'Diary', 'Textbook', 'Research summary', 'Review article', 'Field guide', 'Audio recording', 'Encyclopedia', 'Handbook', 'Index']), correctId: 'B', explanation: "Diaries are original firsthand records." },
+    { id: 142, scenario: "Secondary source:", options: createOptions(['Review journal article', 'Diary', 'Original photograph', 'Raw dataset', 'Manuscript', 'Audio recording', 'Interview transcript', 'H. Experimental log', 'Census data', 'Field notes']), correctId: 'A', explanation: "Review articles analyze primary research." },
+    { id: 143, scenario: "Tertiary source:", options: createOptions(['Dictionary', 'Encyclopedia', 'Index', 'Handbook', 'Glossary', 'Almanac', 'Study guide', 'Field guide', 'Bibliography', 'Manual']), correctId: 'A', explanation: "Dictionaries are tertiary reference materials." },
+    { id: 144, scenario: "Not a tertiary source:", options: createOptions(['Research review article', 'Handbook', 'Index', 'Glossary', 'Encyclopedia', 'Manual', 'Field guide', 'Bibliography', 'Almanac', 'Study guide']), correctId: 'A', explanation: "Research reviews are secondary sources." },
+    { id: 145, scenario: "Task for secondary source:", options: createOptions(['Interpreting research results', 'Recording raw observations', 'Conducting interviews', 'Surveying participants', 'Logging experiments', 'Archiving materials', 'Photographing events', 'Audio recording', 'Collecting samples', 'Taking notes']), correctId: 'A', explanation: "Interpreting results is a secondary source task." },
+    // Set 10
+    { id: 146, scenario: "Primary source:", options: createOptions(['Diary', 'Textbook', 'Review article', 'Research summary', 'Manuscript', 'Field guide', 'Handbook', 'Encyclopedia', 'Audio recording', 'Index']), correctId: 'A', explanation: "Diaries are original firsthand records." },
+    { id: 147, scenario: "Secondary source:", options: createOptions(['Review journal article', 'Raw dataset', 'Interview transcript', 'Field notebook', 'Personal diary', 'Photograph', 'Manuscript', 'Audio recording', 'Experimental log', 'Census form']), correctId: 'A', explanation: "Review articles synthesize primary research." },
+    { id: 148, scenario: "Tertiary source:", options: createOptions(['Encyclopedia', 'Dictionary', 'Handbook', 'Index', 'Glossary', 'Almanac', 'Study guide', 'Field guide', 'Bibliography', 'Manual']), correctId: 'B', explanation: "Dictionaries are tertiary reference works." },
+    { id: 149, scenario: "Not a tertiary source:", options: createOptions(['Research review article', 'Almanac', 'Handbook', 'Index', 'Glossary', 'Encyclopedia', 'Manual', 'Field guide', 'Bibliography', 'Study guide']), correctId: 'A', explanation: "Research reviews are secondary sources." },
+    { id: 150, scenario: "Task for secondary source:", options: createOptions(['Interpreting collected data', 'Recording firsthand observations', 'Conducting interviews', 'Surveying participants', 'Logging experiments', 'Archiving materials', 'Photographing events', 'Audio recording', 'Collecting samples', 'Taking field notes']), correctId: 'A', explanation: "Interpreting data is a secondary source task." }
   ]
 };

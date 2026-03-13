@@ -5,24 +5,29 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Trophy, Search, HelpCircle, ChevronLeft, Play, Info, ListOrdered } from 'lucide-react';
-import { QUESTIONS, Question, Option } from './data/sourceQuestions';
+import { Trophy, Search, ChevronLeft, Play, Info, ListOrdered, Home } from 'lucide-react';
+import { QUESTIONS, Option } from './data/sourceQuestions';
+import { Link } from 'react-router-dom';
 
-type Screen = 'START' | 'HOW_TO_PLAY' | 'LEVEL_SELECT' | 'SCORING' | 'GAME' | 'FEEDBACK' | 'RESULTS' | 'SCOREBOARD';
+type Screen = 'START' | 'HOW_TO_PLAY' | 'LEVEL_SELECT' | 'SET_SELECT' | 'SCORING' | 'GAME' | 'FEEDBACK' | 'RESULTS' | 'SCOREBOARD';
 
 interface ScoreEntry {
   level: string;
+  set: number;
   score: number;
   date: string;
 }
 
-export default function App() {
+export default function SourceDetectives() {
   const [screen, setScreen] = useState<Screen>('START');
   const [level, setLevel] = useState<string>('easy');
+  const [selectedSet, setSelectedSet] = useState<number>(1);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [scoreboard, setScoreboard] = useState<ScoreEntry[]>([]);
+
+  const QUESTIONS_PER_SET = 5;
 
   useEffect(() => {
     const savedScores = localStorage.getItem('source-detective-scores');
@@ -41,6 +46,7 @@ export default function App() {
   const saveScore = (finalScore: number) => {
     const newEntry: ScoreEntry = {
       level: level.charAt(0).toUpperCase() + level.slice(1),
+      set: selectedSet,
       score: finalScore,
       date: new Date().toLocaleDateString(),
     };
@@ -49,8 +55,8 @@ export default function App() {
     localStorage.setItem('source-detective-scores', JSON.stringify(updatedScoreboard));
   };
 
-  const startGame = (selectedLevel: string) => {
-    setLevel(selectedLevel);
+  const startSet = (setNum: number) => {
+    setSelectedSet(setNum);
     setCurrentQuestionIndex(0);
     setScore(0);
     setScreen('GAME');
@@ -58,16 +64,22 @@ export default function App() {
 
   const handleOptionSelect = (option: Option) => {
     setSelectedOption(option);
-    const currentQuestions = QUESTIONS[level];
-    if (option.id === currentQuestions[currentQuestionIndex].correctId) {
+    const setQuestions = getSetQuestions();
+    if (option.id === setQuestions[currentQuestionIndex].correctId) {
       setScore(s => s + getPointsPerCorrect(level));
     }
     setScreen('FEEDBACK');
   };
 
+  const getSetQuestions = () => {
+    const allLevelQuestions = QUESTIONS[level] || [];
+    const startIdx = (selectedSet - 1) * QUESTIONS_PER_SET;
+    return allLevelQuestions.slice(startIdx, startIdx + QUESTIONS_PER_SET);
+  };
+
   const nextQuestion = () => {
-    const currentQuestions = QUESTIONS[level];
-    if (currentQuestionIndex < currentQuestions.length - 1) {
+    const setQuestions = getSetQuestions();
+    if (currentQuestionIndex < setQuestions.length - 1) {
       setCurrentQuestionIndex(i => i + 1);
       setSelectedOption(null);
       setScreen('GAME');
@@ -77,8 +89,8 @@ export default function App() {
     }
   };
 
-  const currentQuestions = QUESTIONS[level];
-  const currentQuestion = currentQuestions[currentQuestionIndex];
+  const setQuestions = getSetQuestions();
+  const currentQuestion = setQuestions[currentQuestionIndex];
 
   const renderHeader = () => (
     <div className="flex items-center justify-center gap-4 mb-8">
@@ -86,7 +98,7 @@ export default function App() {
         <Search className="text-blue-400 w-10 h-10" />
         <span className="absolute inset-0 flex items-center justify-center text-green-500 font-bold text-lg">?</span>
       </div>
-      <h1 className="text-4xl md:text-5xl font-black text-yellow-400 tracking-tighter uppercase drop-shadow-lg">
+      <h1 className="text-4xl md:text-5xl font-black text-yellow-400 tracking-tighter uppercase drop-shadow-lg text-center">
         Source Detectives
       </h1>
       <div className="relative">
@@ -127,6 +139,12 @@ export default function App() {
               >
                 <ListOrdered /> Scoreboard
               </button>
+              <Link
+                to="/"
+                className="bg-gray-600 hover:bg-gray-700 text-white px-8 py-4 rounded-2xl text-xl font-bold transition-all transform hover:scale-105 shadow-xl flex items-center gap-2"
+              >
+                <Home /> Main Menu
+              </Link>
             </div>
           </motion.div>
         )}
@@ -156,7 +174,7 @@ export default function App() {
                   onClick={() => setScreen('START')}
                   className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2"
                 >
-                  <ChevronLeft /> Back to Menu
+                  <ChevronLeft /> Back
                 </button>
                 <button
                   onClick={() => setScreen('SCORING')}
@@ -223,12 +241,15 @@ export default function App() {
             className="text-center"
           >
             {renderHeader()}
-            <h2 className="text-2xl font-bold mb-8 uppercase tracking-widest">Select Level</h2>
+            <h2 className="text-2xl font-bold mb-8 uppercase tracking-widest">Select Difficulty</h2>
             <div className="flex flex-wrap justify-center gap-4">
               {['easy', 'average', 'difficult'].map((l) => (
                 <button
                   key={l}
-                  onClick={() => startGame(l)}
+                  onClick={() => {
+                    setLevel(l);
+                    setScreen('SET_SELECT');
+                  }}
                   className="bg-orange-500 hover:bg-orange-600 text-white px-10 py-4 rounded-2xl text-xl font-bold transition-all transform hover:scale-105 shadow-xl capitalize"
                 >
                   {l}
@@ -239,7 +260,37 @@ export default function App() {
               onClick={() => setScreen('START')}
               className="mt-8 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 mx-auto"
             >
-              <ChevronLeft /> Back to Menu
+              <ChevronLeft /> Back
+            </button>
+          </motion.div>
+        )}
+
+        {screen === 'SET_SELECT' && (
+          <motion.div
+            key="set-select"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="text-center max-w-4xl w-full"
+          >
+            {renderHeader()}
+            <h2 className="text-2xl font-bold mb-4 uppercase tracking-widest">Select Set - {level}</h2>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8">
+              {Array.from({ length: 10 }, (_, i) => i + 1).map((setNum) => (
+                <button
+                  key={setNum}
+                  onClick={() => startSet(setNum)}
+                  className="bg-blue-500 hover:bg-blue-600 text-white p-6 rounded-2xl text-xl font-bold transition-all transform hover:scale-105 shadow-xl"
+                >
+                  Set {setNum}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => setScreen('LEVEL_SELECT')}
+              className="mt-12 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 mx-auto"
+            >
+              <ChevronLeft /> Back
             </button>
           </motion.div>
         )}
@@ -271,10 +322,10 @@ export default function App() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => handleOptionSelect(option)}
-                    className="group relative aspect-[3/4] rounded-xl overflow-hidden shadow-lg border-2 border-transparent hover:border-yellow-400 transition-all bg-[#89b36a] flex items-center justify-center p-4 text-center"
+                    className={`group relative ${level === 'difficult' ? 'aspect-video' : 'aspect-[3/4]'} rounded-xl overflow-hidden shadow-lg border-2 border-transparent hover:border-yellow-400 transition-all bg-[#89b36a] flex items-center justify-center p-4 text-center`}
                   >
                     <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent pointer-events-none" />
-                    <span className="text-lg md:text-xl font-black text-white drop-shadow-md leading-tight">
+                    <span className={`${level === 'difficult' ? 'text-sm md:text-base' : 'text-lg md:text-xl'} font-black text-white drop-shadow-md leading-tight`}>
                       {option.label}
                     </span>
                     <div className="absolute bottom-2 right-2 w-4 h-4 bg-white/30 rounded-full" />
@@ -282,20 +333,25 @@ export default function App() {
                 ))}
               </div>
 
-              <div className="mt-12 flex items-center justify-between text-gray-400 font-bold uppercase tracking-wider">
-                <div className="flex items-center gap-2">
-                  <Trophy className="w-5 h-5 text-yellow-500" />
-                  Score: {score}
+              <div className="mt-12 flex flex-col md:flex-row items-center justify-between text-gray-400 font-bold uppercase tracking-wider gap-4">
+                <div className="flex items-center gap-6">
+                  <div className="flex items-center gap-2">
+                    <Trophy className="w-5 h-5 text-yellow-500" />
+                    Score: {score}
+                  </div>
+                  <div className="text-blue-400">
+                    {level} - Set {selectedSet}
+                  </div>
                 </div>
                 <div>
-                  Question {currentQuestionIndex + 1}/{currentQuestions.length}
+                  Question {currentQuestionIndex + 1}/{setQuestions.length}
                 </div>
               </div>
 
               <div className="mt-4 h-2 bg-gray-700 rounded-full overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%` }}
+                  animate={{ width: `${((currentQuestionIndex + 1) / setQuestions.length) * 100}%` }}
                   className="h-full bg-yellow-500"
                 />
               </div>
@@ -315,9 +371,9 @@ export default function App() {
             <div className="bg-[#242f38] p-6 md:p-10 rounded-3xl shadow-2xl border border-white/5">
               <div className="flex flex-col md:flex-row gap-8 items-center">
                 <div className="w-full md:w-1/3">
-                  <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl bg-[#89b36a] flex items-center justify-center p-6 text-center border-4 border-yellow-400">
-                    <span className="text-2xl font-black text-white uppercase">
-                      {currentQuestions[currentQuestionIndex].options.find(o => o.id === currentQuestion.correctId)?.label}
+                  <div className="aspect-video md:aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl bg-[#89b36a] flex items-center justify-center p-6 text-center border-4 border-yellow-400">
+                    <span className="text-xl md:text-2xl font-black text-white uppercase">
+                      {setQuestions[currentQuestionIndex].options.find(o => o.id === currentQuestion.correctId)?.label}
                     </span>
                   </div>
                 </div>
@@ -335,7 +391,7 @@ export default function App() {
                     onClick={nextQuestion}
                     className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-2xl text-xl font-bold transition-all transform hover:scale-105 shadow-xl self-start uppercase tracking-widest"
                   >
-                    {currentQuestionIndex < currentQuestions.length - 1 ? 'Next Question' : 'Finish Level'}
+                    {currentQuestionIndex < setQuestions.length - 1 ? 'Next Question' : 'Finish Set'}
                   </button>
                 </div>
               </div>
@@ -361,16 +417,16 @@ export default function App() {
               </div>
               <div className="flex flex-wrap justify-center gap-4">
                 <button
-                  onClick={() => setScreen('LEVEL_SELECT')}
+                  onClick={() => setScreen('SET_SELECT')}
                   className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-2xl text-xl font-bold transition-all transform hover:scale-105 shadow-xl uppercase tracking-widest"
                 >
-                  Play Again
+                  Play Another Set
                 </button>
                 <button
                   onClick={() => setScreen('START')}
                   className="bg-gray-600 hover:bg-gray-700 text-white px-8 py-4 rounded-2xl text-xl font-bold transition-all transform hover:scale-105 shadow-xl uppercase tracking-widest"
                 >
-                  Main Menu
+                  Game Menu
                 </button>
               </div>
             </div>
@@ -399,7 +455,7 @@ export default function App() {
                       <div className="flex items-center gap-4">
                         <span className="text-2xl font-black text-yellow-500 w-8">#{idx + 1}</span>
                         <div>
-                          <p className="font-bold text-lg uppercase tracking-wider">{entry.level}</p>
+                          <p className="font-bold text-lg uppercase tracking-wider">{entry.level} - Set {entry.set}</p>
                           <p className="text-xs text-gray-500">{entry.date}</p>
                         </div>
                       </div>
@@ -414,7 +470,7 @@ export default function App() {
                 onClick={() => setScreen('START')}
                 className="mt-8 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 uppercase tracking-widest"
               >
-                <ChevronLeft /> Back to Menu
+                <ChevronLeft /> Back
               </button>
             </div>
           </motion.div>

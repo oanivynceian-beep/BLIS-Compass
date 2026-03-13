@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Trophy, BookOpen, HelpCircle, ChevronLeft, Play, Info, ListOrdered, Candy } from 'lucide-react';
 import { QUESTIONS, Question, Option } from './data/questions';
@@ -17,6 +18,7 @@ interface ScoreEntry {
 }
 
 export default function App() {
+  const navigate = useNavigate();
   const [screen, setScreen] = useState<Screen>('START');
   const [level, setLevel] = useState<string>('easy');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -85,6 +87,15 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#333d47] text-white font-sans selection:bg-yellow-400 selection:text-black p-4 flex flex-col items-center justify-center">
+      {/* Back to Games Tab button, visible except on START screen */}
+      {screen !== 'START' && (
+        <button
+          onClick={() => navigate('/student', { state: { activeTab: 'games' } })}
+          className="absolute top-6 left-6 bg-yellow-400 text-black px-4 py-2 rounded-xl font-bold shadow-lg hover:bg-yellow-500 transition-all z-50 flex items-center gap-2"
+        >
+          <ChevronLeft className="w-5 h-5" /> Back to Games
+        </button>
+      )}
       <AnimatePresence mode="wait">
         {screen === 'START' && (
           <motion.div

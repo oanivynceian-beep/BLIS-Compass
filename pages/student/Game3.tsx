@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight, Check, Play, Info, RotateCcw, Home } from 'lucide-react';
 import { CLASSIFY_LEVELS, MAIN_CLASSES, SUBCLASSES_600, ClassifyLevel, ClassifyOption } from './data/classifyData';
@@ -12,6 +13,7 @@ import { Link } from 'react-router-dom';
 type Screen = 'START' | 'INSTRUCTIONS' | 'LEVEL_SELECT' | 'STEP_1' | 'STEP_2' | 'STEP_3' | 'STEP_4' | 'RESULTS';
 
 export default function ClassifyGame() {
+  const navigate = useNavigate();
   const [screen, setScreen] = useState<Screen>('START');
   const [currentLevelId, setCurrentLevelId] = useState<number>(1);
   const [selectedMainClass, setSelectedMainClass] = useState<string | null>(null);
@@ -58,6 +60,15 @@ export default function ClassifyGame() {
 
   return (
     <div className="min-h-screen bg-[#1a2344] text-white font-sans p-4 flex flex-col items-center justify-center">
+      {/* Back to Games Tab button, visible except on START screen */}
+      {screen !== 'START' && (
+        <button
+          onClick={() => navigate('/student-dashboard?tab=games')}
+          className="absolute top-6 left-6 bg-yellow-400 text-black px-4 py-2 rounded-xl font-bold shadow-lg hover:bg-yellow-500 transition-all z-50 flex items-center gap-2"
+        >
+          <ChevronLeft className="w-5 h-5" /> Back to Games
+        </button>
+      )}
       <AnimatePresence mode="wait">
         {screen === 'START' && (
           <motion.div key="start" variants={containerVariants} initial="initial" animate="animate" exit="exit" className="text-center space-y-6">
