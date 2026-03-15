@@ -47,194 +47,321 @@ export const REFERENCE_SOURCES: Record<string, Option> = {
     id: 'biographical',
     label: 'Biographical Dictionary',
     imageUrl: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=300&h=400&auto=format&fit=crop',
+  },
+  bibliography: {
+    id: 'bibliography',
+    label: 'Bibliography',
+    imageUrl: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=300&h=400&auto=format&fit=crop',
+  },
+  index_database: {
+    id: 'index_database',
+    label: 'Index / Database',
+    imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=300&h=400&auto=format&fit=crop',
+  },
+  directory: {
+    id: 'directory',
+    label: 'Directory',
+    imageUrl: 'https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=300&h=400&auto=format&fit=crop',
+  },
+  gazetteer: {
+    id: 'gazetteer',
+    label: 'Gazetteer',
+    imageUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=300&h=400&auto=format&fit=crop',
+  },
+  yearbook: {
+    id: 'yearbook',
+    label: 'Yearbook',
+    imageUrl: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=300&h=400&auto=format&fit=crop',
+  },
+  statistical_abstract: {
+    id: 'statistical_abstract',
+    label: 'Statistical Abstract',
+    imageUrl: 'https://images.unsplash.com/photo-1551288049-bbbda536339a?q=80&w=300&h=400&auto=format&fit=crop',
+  },
+  archives: {
+    id: 'archives',
+    label: 'Archives / Special Collections',
+    imageUrl: 'https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=300&h=400&auto=format&fit=crop',
+  },
+  patent_database: {
+    id: 'patent_database',
+    label: 'Patent Database',
+    imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=300&h=400&auto=format&fit=crop',
+  },
+  legal_database: {
+    id: 'legal_database',
+    label: 'Legal Database',
+    imageUrl: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=300&h=400&auto=format&fit=crop',
+  },
+  data_repository: {
+    id: 'data_repository',
+    label: 'Data Repository',
+    imageUrl: 'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=300&h=400&auto=format&fit=crop',
+  },
+  gis_repository: {
+    id: 'gis_repository',
+    label: 'GIS Data Repository',
+    imageUrl: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=300&h=400&auto=format&fit=crop',
   }
 };
 
 export const QUESTIONS: Record<string, Question[]> = {
   easy: [
+    // Set 1
     {
       id: 1,
-      scenario: "I'm reading an article and came across the word 'ethnomusicology.' I want to know what it means and where it comes from. What should I check first?",
-      options: [
-        REFERENCE_SOURCES.atlas,
-        REFERENCE_SOURCES.etymological,
-        REFERENCE_SOURCES.encyclopedia,
-        REFERENCE_SOURCES.dictionary
-      ],
-      correctId: 'etymological',
-      explanation: "An etymological dictionary explains the origin, history, and development of words. Since the student wants to know both the meaning and where the word came from, this source is the most appropriate."
+      scenario: "A student asks for the meaning of the word 'ubiquitous.' Which source should the librarian use?",
+      options: [REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.almanac],
+      correctId: 'dictionary',
+      explanation: "A dictionary provides definitions and meanings of words."
     },
     {
       id: 2,
-      scenario: "I need to find the exact location of the Nile River and see which countries it flows through. Which book is best?",
-      options: [
-        REFERENCE_SOURCES.dictionary,
-        REFERENCE_SOURCES.almanac,
-        REFERENCE_SOURCES.atlas,
-        REFERENCE_SOURCES.thesaurus
-      ],
+      scenario: "A patron asks for the capital city of Canada. Which source is most appropriate?",
+      options: [REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.bibliography],
       correctId: 'atlas',
-      explanation: "A World Atlas is a collection of maps. It is the perfect source for finding geographical locations and borders."
+      explanation: "An atlas contains maps and geographical information like capital cities."
     },
     {
       id: 3,
-      scenario: "I'm writing an essay and I've used the word 'happy' too many times. I need a word that means the same thing but sounds more professional.",
-      options: [
-        REFERENCE_SOURCES.thesaurus,
-        REFERENCE_SOURCES.encyclopedia,
-        REFERENCE_SOURCES.atlas,
-        REFERENCE_SOURCES.almanac
-      ],
-      correctId: 'thesaurus',
-      explanation: "A thesaurus provides synonyms (words with similar meanings) and antonyms. It's the go-to tool for improving vocabulary in writing."
+      scenario: "A user wants basic information about climate change. Which source should be recommended first?",
+      options: [REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.index_database, REFERENCE_SOURCES.gazetteer, REFERENCE_SOURCES.yearbook],
+      correctId: 'encyclopedia',
+      explanation: "Encyclopedias provide general overviews and basic information on a wide range of topics."
     },
     {
       id: 4,
-      scenario: "I want to read a brief overview of the history of space exploration. Where can I find a summary of this topic?",
-      options: [
-        REFERENCE_SOURCES.dictionary,
-        REFERENCE_SOURCES.encyclopedia,
-        REFERENCE_SOURCES.atlas,
-        REFERENCE_SOURCES.thesaurus
-      ],
-      correctId: 'encyclopedia',
-      explanation: "An encyclopedia provides comprehensive summaries and overviews of a wide range of topics, including historical events and scientific subjects."
+      scenario: "A student wants the correct spelling of 'accommodation.' Which reference source is best?",
+      options: [REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.almanac, REFERENCE_SOURCES.directory],
+      correctId: 'dictionary',
+      explanation: "Dictionaries are the primary source for checking word spellings."
     },
     {
       id: 5,
-      scenario: "I need to know the correct spelling and pronunciation of the word 'phenomenon'.",
-      options: [
-        REFERENCE_SOURCES.almanac,
-        REFERENCE_SOURCES.atlas,
-        REFERENCE_SOURCES.dictionary,
-        REFERENCE_SOURCES.encyclopedia
-      ],
-      correctId: 'dictionary',
-      explanation: "A dictionary is the primary source for word spellings, pronunciations, and basic definitions."
-    }
-  ],
-  medium: [
+      scenario: "A user asks for the population of Japan in 2023. Which source is most appropriate?",
+      options: [REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.almanac, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.thesaurus],
+      correctId: 'almanac',
+      explanation: "Almanacs provide current facts, statistics, and annual data like population figures."
+    },
+    // Set 2
     {
       id: 6,
-      scenario: "I want to know the predicted weather patterns and astronomical data for the upcoming year. Which source should I consult?",
-      options: [
-        REFERENCE_SOURCES.almanac,
-        REFERENCE_SOURCES.dictionary,
-        REFERENCE_SOURCES.atlas,
-        REFERENCE_SOURCES.biographical
-      ],
-      correctId: 'almanac',
-      explanation: "An almanac is an annual publication containing a calendar with information on weather forecasts, tide tables, and other tabular data."
+      scenario: "A patron asks for synonyms of the word 'happy.' Which source should the librarian consult?",
+      options: [REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.thesaurus, REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.atlas],
+      correctId: 'thesaurus',
+      explanation: "A thesaurus is specifically used to find synonyms and antonyms."
     },
     {
       id: 7,
-      scenario: "I am researching the life and major achievements of Marie Curie. Where can I find a detailed account of her life?",
-      options: [
-        REFERENCE_SOURCES.atlas,
-        REFERENCE_SOURCES.biographical,
-        REFERENCE_SOURCES.thesaurus,
-        REFERENCE_SOURCES.dictionary
-      ],
-      correctId: 'biographical',
-      explanation: "A biographical dictionary contains accounts of the lives of many different people, usually organized alphabetically."
+      scenario: "A user wants to locate Mount Everest on a map. Which source is best?",
+      options: [REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.almanac, REFERENCE_SOURCES.index_database],
+      correctId: 'atlas',
+      explanation: "Atlases are used to find geographical locations on maps."
     },
     {
       id: 8,
-      scenario: "I need to find the population statistics of various countries from the last five years. Which source is most likely to have this data?",
-      options: [
-        REFERENCE_SOURCES.dictionary,
-        REFERENCE_SOURCES.almanac,
-        REFERENCE_SOURCES.thesaurus,
-        REFERENCE_SOURCES.atlas
-      ],
-      correctId: 'almanac',
-      explanation: "Almanacs often include statistical data about countries, populations, and world events recorded over time."
+      scenario: "A student asks for a short biography of Albert Einstein. Which source is best?",
+      options: [REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.almanac, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.atlas],
+      correctId: 'encyclopedia',
+      explanation: "Encyclopedias often contain short biographical entries for famous individuals."
     },
     {
       id: 9,
-      scenario: "I'm looking for the root of the word 'philosophy' to understand its original Greek meaning.",
-      options: [
-        REFERENCE_SOURCES.encyclopedia,
-        REFERENCE_SOURCES.etymological,
-        REFERENCE_SOURCES.atlas,
-        REFERENCE_SOURCES.almanac
-      ],
-      correctId: 'etymological',
-      explanation: "Etymological dictionaries focus specifically on the history and linguistic roots of words."
+      scenario: "A user wants major events that happened in 2022. Which source is best?",
+      options: [REFERENCE_SOURCES.yearbook, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.gazetteer, REFERENCE_SOURCES.thesaurus],
+      correctId: 'yearbook',
+      explanation: "Yearbooks record major events and developments of a specific year."
     },
     {
       id: 10,
-      scenario: "I need to see the topography and elevation levels of the Himalayan mountain range.",
-      options: [
-        REFERENCE_SOURCES.dictionary,
-        REFERENCE_SOURCES.atlas,
-        REFERENCE_SOURCES.biographical,
-        REFERENCE_SOURCES.thesaurus
-      ],
-      correctId: 'atlas',
-      explanation: "Atlases provide various types of maps, including physical maps that show topography and elevation."
-    }
-  ],
-  hard: [
+      scenario: "A student asks for the definition of biodiversity. Which reference source should be used?",
+      options: [REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.directory, REFERENCE_SOURCES.almanac],
+      correctId: 'dictionary',
+      explanation: "Dictionaries provide definitions for terms like biodiversity."
+    },
+    // Set 3
     {
       id: 11,
-      scenario: "I am comparing the socio-economic impact of the Industrial Revolution across different continents. I need a source that provides in-depth articles by experts.",
-      options: [
-        REFERENCE_SOURCES.dictionary,
-        REFERENCE_SOURCES.encyclopedia,
-        REFERENCE_SOURCES.almanac,
-        REFERENCE_SOURCES.atlas
-      ],
-      correctId: 'encyclopedia',
-      explanation: "Specialized or general encyclopedias provide in-depth, expert-written articles on complex historical and social topics."
+      scenario: "A user asks for countries and their capitals.",
+      options: [REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.almanac, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.thesaurus],
+      correctId: 'atlas',
+      explanation: "Atlases show countries and their capital cities on maps."
     },
     {
       id: 12,
-      scenario: "I need to find a list of words that are antonyms for 'ambiguous' to make my sentence clearer.",
-      options: [
-        REFERENCE_SOURCES.thesaurus,
-        REFERENCE_SOURCES.biographical,
-        REFERENCE_SOURCES.atlas,
-        REFERENCE_SOURCES.etymological
-      ],
-      correctId: 'thesaurus',
-      explanation: "A thesaurus is specifically designed to help you find both synonyms and antonyms for words."
+      scenario: "A student asks for brief information about volcanoes.",
+      options: [REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.index_database, REFERENCE_SOURCES.dictionary],
+      correctId: 'encyclopedia',
+      explanation: "Encyclopedias provide brief, general information on topics like volcanoes."
     },
     {
       id: 13,
-      scenario: "I'm looking for the specific date of the next solar eclipse and the best locations on Earth to view it.",
-      options: [
-        REFERENCE_SOURCES.dictionary,
-        REFERENCE_SOURCES.almanac,
-        REFERENCE_SOURCES.biographical,
-        REFERENCE_SOURCES.encyclopedia
-      ],
-      correctId: 'almanac',
-      explanation: "Almanacs are famous for providing precise astronomical data, including dates and visibility for eclipses."
+      scenario: "A patron wants the meaning of the word 'sustainable.'",
+      options: [REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.gazetteer, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.directory],
+      correctId: 'dictionary',
+      explanation: "A dictionary is used to find the meaning of words."
     },
     {
       id: 14,
-      scenario: "I want to trace how the meaning of the word 'knight' has shifted from 'servant' in Old English to its modern meaning.",
-      options: [
-        REFERENCE_SOURCES.dictionary,
-        REFERENCE_SOURCES.etymological,
-        REFERENCE_SOURCES.encyclopedia,
-        REFERENCE_SOURCES.atlas
-      ],
-      correctId: 'etymological',
-      explanation: "Tracing the shift in meaning over centuries is the core purpose of an etymological dictionary."
+      scenario: "A user asks for synonyms of 'important.'",
+      options: [REFERENCE_SOURCES.thesaurus, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.almanac],
+      correctId: 'thesaurus',
+      explanation: "A thesaurus provides synonyms for words."
     },
     {
       id: 15,
-      scenario: "I need to find a map that shows the historical changes in European borders between 1900 and 1950.",
-      options: [
-        REFERENCE_SOURCES.almanac,
-        REFERENCE_SOURCES.atlas,
-        REFERENCE_SOURCES.dictionary,
-        REFERENCE_SOURCES.thesaurus
-      ],
+      scenario: "A patron wants a list of world rivers and their locations.",
+      options: [REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.thesaurus, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.directory],
       correctId: 'atlas',
-      explanation: "Historical atlases provide maps that show how political borders have changed over time."
+      explanation: "Atlases provide geographical information including rivers and their locations."
+    }
+  ],
+  medium: [
+    // Average Set 1
+    {
+      id: 101,
+      scenario: "A researcher asks for a list of books written about renewable energy.",
+      options: [REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.almanac, REFERENCE_SOURCES.directory, REFERENCE_SOURCES.thesaurus, REFERENCE_SOURCES.gazetteer],
+      correctId: 'bibliography',
+      explanation: "A bibliography is a list of books or other works on a particular subject."
+    },
+    {
+      id: 102,
+      scenario: "A student wants journal articles about artificial intelligence.",
+      options: [REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.index_database, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.directory, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.almanac],
+      correctId: 'index_database',
+      explanation: "An index or database is used to find articles in journals and other periodicals."
+    },
+    {
+      id: 103,
+      scenario: "A user wants addresses of universities in the Philippines.",
+      options: [REFERENCE_SOURCES.directory, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.gazetteer],
+      correctId: 'directory',
+      explanation: "A directory provides contact information like addresses and phone numbers."
+    },
+    {
+      id: 104,
+      scenario: "A patron asks where the Amazon River is located.",
+      options: [REFERENCE_SOURCES.thesaurus, REFERENCE_SOURCES.gazetteer, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.index_database, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.directory],
+      correctId: 'gazetteer',
+      explanation: "A gazetteer is a geographical dictionary that provides locations of places."
+    },
+    {
+      id: 105,
+      scenario: "A student wants statistics on global literacy rates.",
+      options: [REFERENCE_SOURCES.statistical_abstract, REFERENCE_SOURCES.directory, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.almanac],
+      correctId: 'statistical_abstract',
+      explanation: "A statistical abstract provides summaries of statistics on various topics."
+    },
+    // Average Set 2
+    {
+      id: 106,
+      scenario: "A researcher wants a list of all works written by Shakespeare.",
+      options: [REFERENCE_SOURCES.gazetteer, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.directory, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.index_database, REFERENCE_SOURCES.almanac],
+      correctId: 'bibliography',
+      explanation: "A bibliography lists works by a specific author."
+    },
+    {
+      id: 107,
+      scenario: "A user wants phone numbers of hospitals in the city.",
+      options: [REFERENCE_SOURCES.directory, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.gazetteer],
+      correctId: 'directory',
+      explanation: "Directories are used to find contact information like phone numbers."
+    },
+    {
+      id: 108,
+      scenario: "A student asks for journal articles on climate change from 2020 onward.",
+      options: [REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.index_database, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.almanac, REFERENCE_SOURCES.directory, REFERENCE_SOURCES.thesaurus],
+      correctId: 'index_database',
+      explanation: "Databases and indexes are the best source for finding recent journal articles."
+    },
+    {
+      id: 109,
+      scenario: "A patron wants a brief explanation of quantum computing.",
+      options: [REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.directory, REFERENCE_SOURCES.gazetteer, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.index_database, REFERENCE_SOURCES.almanac],
+      correctId: 'encyclopedia',
+      explanation: "Encyclopedias provide brief explanations and overviews of complex topics."
+    },
+    {
+      id: 110,
+      scenario: "A researcher wants historical facts about World War II.",
+      options: [REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.directory, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.gazetteer],
+      correctId: 'encyclopedia',
+      explanation: "Encyclopedias are excellent sources for historical facts and overviews."
+    }
+  ],
+  hard: [
+    // Difficult Set 1
+    {
+      id: 201,
+      scenario: "A graduate student needs peer-reviewed journal articles on machine learning applications in healthcare published in the last 5 years.",
+      options: [REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.index_database, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.directory, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.almanac, REFERENCE_SOURCES.statistical_abstract, REFERENCE_SOURCES.thesaurus],
+      correctId: 'index_database',
+      explanation: "Academic databases (indexes) are essential for finding peer-reviewed research articles."
+    },
+    {
+      id: 202,
+      scenario: "A librarian receives a reference request for primary sources on the American Civil War, including letters, diaries, and government documents.",
+      options: [REFERENCE_SOURCES.archives, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.index_database, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.almanac, REFERENCE_SOURCES.thesaurus],
+      correctId: 'archives',
+      explanation: "Archives and special collections house primary source materials like letters and diaries."
+    },
+    {
+      id: 203,
+      scenario: "A researcher wants conference proceedings in computer science from the last 3 years.",
+      options: [REFERENCE_SOURCES.index_database, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.thesaurus, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.directory, REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.almanac, REFERENCE_SOURCES.statistical_abstract],
+      correctId: 'index_database',
+      explanation: "Specialized academic databases are the best place to find conference proceedings."
+    },
+    {
+      id: 204,
+      scenario: "A student asks for statistical comparisons of global economic growth across multiple decades, including GDP, inflation, and unemployment.",
+      options: [REFERENCE_SOURCES.data_repository, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.gazetteer, REFERENCE_SOURCES.thesaurus, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.almanac],
+      correctId: 'data_repository',
+      explanation: "Statistical databases and data repositories provide detailed economic data across time."
+    },
+    {
+      id: 205,
+      scenario: "A user remembers only the topic of an article on climate change policy but needs full citation details.",
+      options: [REFERENCE_SOURCES.index_database, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.almanac, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.gazetteer, REFERENCE_SOURCES.thesaurus, REFERENCE_SOURCES.directory, REFERENCE_SOURCES.bibliography],
+      correctId: 'index_database',
+      explanation: "Indexing databases allow you to search by topic to find full citation details for articles."
+    },
+    // Difficult Set 2
+    {
+      id: 206,
+      scenario: "A doctoral student wants the latest peer-reviewed research on artificial intelligence ethics.",
+      options: [REFERENCE_SOURCES.index_database, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.directory, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.encyclopedia, REFERENCE_SOURCES.thesaurus, REFERENCE_SOURCES.almanac],
+      correctId: 'index_database',
+      explanation: "Academic databases provide access to the latest peer-reviewed research."
+    },
+    {
+      id: 207,
+      scenario: "A reference interview requires guidance on combining multiple sources for a systematic review. Which type of reference service is this?",
+      options: [REFERENCE_SOURCES.biographical, REFERENCE_SOURCES.archives, REFERENCE_SOURCES.index_database, REFERENCE_SOURCES.etymological],
+      correctId: 'index_database', // Mapping 'Research reference' to a source context
+      explanation: "Research reference services often involve deep dives into academic databases."
+    },
+    {
+      id: 208,
+      scenario: "A patron wants online government policy documents related to environmental law.",
+      options: [REFERENCE_SOURCES.legal_database, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.dictionary, REFERENCE_SOURCES.almanac, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.index_database],
+      correctId: 'legal_database',
+      explanation: "Legal databases or official government portals are the best source for policy documents and laws."
+    },
+    {
+      id: 209,
+      scenario: "A researcher needs conference proceedings and technical papers on quantum computing.",
+      options: [REFERENCE_SOURCES.index_database, REFERENCE_SOURCES.gazetteer, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.directory, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.thesaurus, REFERENCE_SOURCES.almanac, REFERENCE_SOURCES.statistical_abstract],
+      correctId: 'index_database',
+      explanation: "Academic databases like IEEE Xplore or ACM are the primary sources for technical papers."
+    },
+    {
+      id: 210,
+      scenario: "A user requests datasets for climate science modeling, including temperature, precipitation, and atmospheric CO2 levels.",
+      options: [REFERENCE_SOURCES.data_repository, REFERENCE_SOURCES.thesaurus, REFERENCE_SOURCES.atlas, REFERENCE_SOURCES.almanac, REFERENCE_SOURCES.bibliography, REFERENCE_SOURCES.directory, REFERENCE_SOURCES.gazetteer, REFERENCE_SOURCES.encyclopedia],
+      correctId: 'data_repository',
+      explanation: "Research data repositories house datasets for scientific modeling."
     }
   ]
 };
