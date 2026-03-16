@@ -195,9 +195,11 @@ export default function ShelfShuffle() {
     if (!level) return null;
 
     const bookCount = shuffledBooks.length;
+    // Adjusted font sizes for better readability on all levels
     const bookWidth = bookCount > 15 ? 'w-12' : bookCount > 10 ? 'w-16' : 'w-24';
     const spineWidth = bookCount > 15 ? 'w-8' : bookCount > 10 ? 'w-12' : 'w-16';
-    const labelSize = bookCount > 15 ? 'text-[6px]' : bookCount > 10 ? 'text-[8px]' : 'text-[10px]';
+    // Increased font size for medium and hard levels
+    const labelSize = bookCount > 15 ? 'text-[10px]' : bookCount > 10 ? 'text-[12px]' : 'text-[14px]';
 
     return (
       <div className="flex flex-col min-h-screen bg-[#1a1c3a] text-white">
