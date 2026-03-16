@@ -4,16 +4,14 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight, Check, Play, Info, RotateCcw, Home } from 'lucide-react';
-import { CLASSIFY_LEVELS, MAIN_CLASSES, SUBCLASSES_600, ClassifyLevel, ClassifyOption } from './data/classifyData';
+import { CLASSIFY_LEVELS, MAIN_CLASSES, ALL_SUBCLASSES, ClassifyLevel, ClassifyOption } from './data/classifyData';
 import { Link } from 'react-router-dom';
 
 type Screen = 'START' | 'INSTRUCTIONS' | 'LEVEL_SELECT' | 'STEP_1' | 'STEP_2' | 'STEP_3' | 'STEP_4' | 'RESULTS';
 
 export default function ClassifyGame() {
-  const navigate = useNavigate();
   const [screen, setScreen] = useState<Screen>('START');
   const [currentLevelId, setCurrentLevelId] = useState<number>(1);
   const [selectedMainClass, setSelectedMainClass] = useState<string | null>(null);
@@ -40,6 +38,8 @@ export default function ClassifyGame() {
     return `${minutes}M : ${seconds}S`;
   };
 
+  const currentSubclasses = selectedMainClass ? ALL_SUBCLASSES[selectedMainClass] || [] : [];
+
   const isMainClassCorrect = selectedMainClass === currentLevel.correctMainClassId;
   const isSubclassCorrect = selectedSubclass === currentLevel.correctSubclassId;
   const isAuthorNumberCorrect = authorNumber.toUpperCase() === currentLevel.correctAuthorNumber.toUpperCase();
@@ -60,15 +60,6 @@ export default function ClassifyGame() {
 
   return (
     <div className="min-h-screen bg-[#1a2344] text-white font-sans p-4 flex flex-col items-center justify-center">
-      {/* Back to Games Tab button, visible except on START screen */}
-      {screen !== 'START' && (
-        <button
-          onClick={() => navigate('/student-dashboard?tab=games')}
-          className="absolute top-6 left-6 bg-yellow-400 text-black px-4 py-2 rounded-xl font-bold shadow-lg hover:bg-yellow-500 transition-all z-50 flex items-center gap-2"
-        >
-          <ChevronLeft className="w-5 h-5" /> Back to Games
-        </button>
-      )}
       <AnimatePresence mode="wait">
         {screen === 'START' && (
           <motion.div key="start" variants={containerVariants} initial="initial" animate="animate" exit="exit" className="text-center space-y-6">
@@ -121,24 +112,15 @@ export default function ClassifyGame() {
           <motion.div key="levels" variants={containerVariants} initial="initial" animate="animate" exit="exit" className="max-w-4xl w-full">
             {renderHeader('SELECT LEVEL')}
             <div className="grid grid-cols-5 md:grid-cols-10 gap-4 p-4">
-              {Array.from({ length: 20 }).map((_, i) => {
-                const levelId = i + 1;
-                const isAvailable = CLASSIFY_LEVELS.some(l => l.id === levelId);
-                return (
-                  <button
-                    key={i}
-                    disabled={!isAvailable}
-                    onClick={() => startLevel(levelId)}
-                    className={`aspect-square rounded-xl text-2xl font-black flex items-center justify-center transition-all border-4 ${
-                      isAvailable 
-                        ? 'bg-white text-[#88ccff] border-white hover:bg-[#88ccff] hover:text-white' 
-                        : 'bg-white/20 text-white/40 border-transparent cursor-not-allowed'
-                    }`}
-                  >
-                    {levelId}
-                  </button>
-                );
-              })}
+              {CLASSIFY_LEVELS.map((level) => (
+                <button
+                  key={level.id}
+                  onClick={() => startLevel(level.id)}
+                  className="aspect-square rounded-xl text-2xl font-black flex items-center justify-center transition-all border-4 bg-white text-[#88ccff] border-white hover:bg-[#88ccff] hover:text-white"
+                >
+                  {level.id}
+                </button>
+              ))}
             </div>
             <div className="flex justify-center mt-8">
               <button
@@ -230,7 +212,7 @@ export default function ClassifyGame() {
               </div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-              {SUBCLASSES_600.map((option) => (
+              {currentSubclasses.map((option) => (
                 <button
                   key={option.id}
                   onClick={() => setSelectedSubclass(option.id)}
@@ -295,7 +277,7 @@ export default function ClassifyGame() {
                 {selectedMainClass && selectedSubclass && authorNumber && (
                   <div className="bg-[#b4b8e2] p-6 rounded-3xl text-[#2a1b3d] space-y-2 font-black uppercase italic text-lg relative">
                     <p>Main Class: {MAIN_CLASSES.find(m => m.id === selectedMainClass)?.label}</p>
-                    <p>Subclass: {SUBCLASSES_600.find(s => s.id === selectedSubclass)?.label}</p>
+                    <p>Subclass: {currentSubclasses.find(s => s.id === selectedSubclass)?.label}</p>
                     <p>Author's Number: {authorNumber}</p>
                     <button 
                       onClick={() => {
@@ -336,7 +318,7 @@ export default function ClassifyGame() {
                   {isMainClassCorrect ? <Check className="text-green-600" strokeWidth={4} size={40} /> : <span className="text-red-600">X</span>}
                 </div>
                 <div className="flex items-center justify-between">
-                  <p>Subclass: {SUBCLASSES_600.find(s => s.id === selectedSubclass)?.label}</p>
+                  <p>Subclass: {currentSubclasses.find(s => s.id === selectedSubclass)?.label}</p>
                   {isSubclassCorrect ? <Check className="text-green-600" strokeWidth={4} size={40} /> : <span className="text-red-600">X</span>}
                 </div>
                 <div className="flex items-center justify-between">
